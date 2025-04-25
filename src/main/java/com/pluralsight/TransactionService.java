@@ -10,7 +10,6 @@ public class TransactionService {
     public void logTransaction() {
         try (var fileWriter = new FileWriter(FILE_PATH, true)) {
             fileWriter.write("TransactionID,Amount,Date,Time,Description \n");
-            fileWriter.close();
         } catch (Exception e) {
             System.out.println("Error while trying to log transaction to file");
         }
