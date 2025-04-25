@@ -2,7 +2,7 @@ package com.pluralsight;
 
 import static com.pluralsight.Main.scanner;
 
-public class MainMenu {
+public class HomeScreen {
     private final LedgerScreen ledgerScreen = new LedgerScreen();
     private final ClearScreen clearScreen = new ClearScreen();
     private final TransactionService transactionService = new TransactionService();
@@ -24,7 +24,7 @@ public class MainMenu {
 
     public void mainMenuLogic() {
         while (true) {
-            var option = new MainMenu().showMainMenu();
+            var option = new HomeScreen().showMainMenu();
             switch (option) {
                 case "D" -> transactionService.logTransaction();
                 case "P" -> System.out.println("Make Payment");
