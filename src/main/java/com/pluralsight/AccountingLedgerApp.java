@@ -1,6 +1,6 @@
 package com.pluralsight;
 
-public class SearchInventoryApp {
+public class AccountingLedgerApp {
     private final Menu menu = new Menu();
 
     public void start() {
