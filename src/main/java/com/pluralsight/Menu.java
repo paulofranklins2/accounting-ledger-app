@@ -12,11 +12,20 @@ public class Menu {
         System.out.println("[L] Ledger");
         System.out.println("[X] Exit");
 
-        Scanner scanner = new Scanner(System.in);
         System.out.print("Select an option: ");
         return scanner.nextLine().trim().toUpperCase();
     }
 
+    public String showLedgerScreen() {
+        System.out.println("Ledger Screen");
+        System.out.println("[A] All - Display all entries");
+        System.out.println("[D] Deposits - Display only deposit entries");
+        System.out.println("[P] Payments - Display only payment entries");
+        System.out.println("[R] Reports - View reports and search");
+        System.out.println("[H] Home - Return to home screen");
 
+        System.out.print("Select an option: ");
+        return scanner.nextLine().trim().toUpperCase();
+    }
 
 }
