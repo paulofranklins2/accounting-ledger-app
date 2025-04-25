@@ -3,8 +3,6 @@ package com.pluralsight;
 import static com.pluralsight.Main.*;
 
 public class ReportScreen {
-
-
     private String showReportMenu() {
         System.out.println("Report Options");
         System.out.println("[1] Month To Date");

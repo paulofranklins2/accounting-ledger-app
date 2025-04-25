@@ -3,8 +3,6 @@ package com.pluralsight;
 import static com.pluralsight.Main.*;
 
 public class LedgerScreen {
-
-
     private String showLedgerScreen() {
         System.out.println("Ledger Screen");
         System.out.println("[A] All - Display all entries");

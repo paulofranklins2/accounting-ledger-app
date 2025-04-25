@@ -11,7 +11,6 @@ public class Main {
     public static final ReportScreen reportScreen = new ReportScreen();
 
     public static void main(String[] args) {
-
         new HomeScreen().start();
     }
 }
