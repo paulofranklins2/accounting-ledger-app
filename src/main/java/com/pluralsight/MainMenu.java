@@ -5,6 +5,7 @@ import static com.pluralsight.Main.scanner;
 public class MainMenu {
     private final LedgerScreen ledgerScreen = new LedgerScreen();
     private final ClearScreen clearScreen = new ClearScreen();
+    private final TransactionService transactionService = new TransactionService();
 
     private String showMainMenu() {
         System.out.println("What would you like to do?");
@@ -25,7 +26,7 @@ public class MainMenu {
         while (true) {
             var option = new MainMenu().showMainMenu();
             switch (option) {
-                case "D" -> System.out.println("Add Deposit");
+                case "D" -> transactionService.logTransaction();
                 case "P" -> System.out.println("Make Payment");
                 case "L" -> ledgerScreen.ledgerMenuLogic();
                 case "X" -> {

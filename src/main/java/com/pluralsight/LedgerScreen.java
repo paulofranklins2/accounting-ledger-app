@@ -5,6 +5,7 @@ import static com.pluralsight.Main.scanner;
 public class LedgerScreen {
     private static final MainMenu menu = new MainMenu();
     private static final ClearScreen clearScreen = new ClearScreen();
+    private static final TransactionService transactionService = new TransactionService();
 
     private String showLedgerScreen() {
         System.out.println("Ledger Screen");
@@ -26,7 +27,7 @@ public class LedgerScreen {
         while (true) {
             String s = showLedgerScreen();
             switch (s) {
-                case "A" -> System.out.println("All");
+                case "A" -> transactionService.readAllTransactions();
                 case "D" -> System.out.println("Deposits");
                 case "P" -> System.out.println("Payments");
                 case "R" -> System.out.println("Reports");
