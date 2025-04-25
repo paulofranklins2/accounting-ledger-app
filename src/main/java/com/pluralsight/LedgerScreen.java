@@ -1,11 +1,9 @@
 package com.pluralsight;
 
-import static com.pluralsight.Main.scanner;
+import static com.pluralsight.Main.*;
 
 public class LedgerScreen {
-    private static final MainMenu menu = new MainMenu();
-    private static final ClearScreen clearScreen = new ClearScreen();
-    private static final TransactionService transactionService = new TransactionService();
+
 
     private String showLedgerScreen() {
         System.out.println("Ledger Screen");
@@ -30,10 +28,10 @@ public class LedgerScreen {
                 case "A" -> transactionService.readAllTransactions();
                 case "D" -> System.out.println("Deposits");
                 case "P" -> System.out.println("Payments");
-                case "R" -> System.out.println("Reports");
+                case "R" -> reportScreen.reportMenuLogic();
                 case "H" -> {
                     System.out.println("Home - Return to home screen");
-                    menu.mainMenuLogic();
+                    homeScreen.mainMenuLogic();
                 }
                 default -> System.out.println("Select an option");
             }
