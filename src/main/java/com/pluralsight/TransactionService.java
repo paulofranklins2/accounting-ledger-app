@@ -6,7 +6,6 @@ import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.regex.Pattern;
 
@@ -36,11 +35,11 @@ public class TransactionService {
     public void retrieveTransaction(String option) {
         try (var bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
-            ArrayList<String> transactions = new ArrayList<>();
-            System.out.println("Option: " + option);
 
             while ((line = bufferedReader.readLine()) != null) {
-                var lineIsPayment = Pattern.compile("-").matcher(line).find();
+                var split = line.split("\\|");
+                var index = split[4];
+                var lineIsPayment = Pattern.compile("-").matcher(index).find();
 
                 if (option.equals("A")) {
                     System.out.println(line);
