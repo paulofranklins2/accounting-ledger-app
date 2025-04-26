@@ -22,8 +22,7 @@ public class HomeScreen {
         while (true) {
             var option = new HomeScreen().showMainMenu();
             switch (option) {
-                case "D" -> transactionService.logTransaction();
-                case "P" -> System.out.println("Make Payment");
+                case "D", "P" -> transactionService.requestTransactionInformation(option);
                 case "L" -> ledgerScreen.ledgerMenuLogic();
                 case "X" -> {
                     System.out.println("Thank you for using accounting ledger app");
