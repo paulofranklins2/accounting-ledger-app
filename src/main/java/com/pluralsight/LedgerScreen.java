@@ -21,11 +21,9 @@ public class LedgerScreen {
 
     public void ledgerMenuLogic() {
         while (true) {
-            String s = showLedgerScreen();
+            var s = showLedgerScreen().toUpperCase();
             switch (s) {
-                case "A" -> transactionService.readAllTransactions();
-                case "D" -> System.out.println("Deposits");
-                case "P" -> System.out.println("Payments");
+                case "A", "D", "P" -> transactionService.retrieveTransaction(s);
                 case "R" -> reportScreen.reportMenuLogic();
                 case "H" -> {
                     System.out.println("Home - Return to home screen");

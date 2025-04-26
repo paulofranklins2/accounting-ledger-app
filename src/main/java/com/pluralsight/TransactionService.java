@@ -6,7 +6,9 @@ import java.io.FileWriter;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.InputMismatchException;
+import java.util.regex.Pattern;
 
 import static com.pluralsight.Main.scanner;
 
@@ -20,24 +22,35 @@ public class TransactionService {
         stringBuilder
                 .append(localDate).append("|")
                 .append(localTime).append("|")
-                .append(getTransaction.description())
-                .append("|").append(getTransaction.vendor())
-                .append("|").append(getTransaction.amount())
-                .append("\n");
+                .append(getTransaction.description()).append("|")
+                .append(getTransaction.vendor()).append("|")
+                .append(getTransaction.amount()).append("\n");
 
         try (var fileWriter = new FileWriter(FILE_PATH, true)) {
-            fileWriter.write(stringBuilder.toString());
+            fileWriter.write(stringBuilder.toString().toUpperCase().trim());
         } catch (Exception e) {
             System.out.println("Error while trying to log transaction to file");
         }
     }
 
-    public void readAllTransactions() {
+    public void retrieveTransaction(String option) {
         try (var bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
+            ArrayList<String> transactions = new ArrayList<>();
+            System.out.println("Option: " + option);
+
             while ((line = bufferedReader.readLine()) != null) {
-                System.out.println(line);
-                line = bufferedReader.readLine();
+                var lineIsPayment = Pattern.compile("-").matcher(line).find();
+
+                if (option.equals("A")) {
+                    System.out.println(line);
+                }
+                if (option.equals("D") && !lineIsPayment) {
+                    System.out.println(line);
+                }
+                if (option.equals("P") && lineIsPayment) {
+                    System.out.println(line);
+                }
             }
         } catch (Exception e) {
             System.out.println("Error while trying to read transactions from file");
