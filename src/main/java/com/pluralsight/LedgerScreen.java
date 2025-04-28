@@ -15,15 +15,15 @@ public class LedgerScreen {
             System.out.print("Select an option: ");
             return scanner.nextLine().trim().toUpperCase();
         } finally {
-            clearScreen.clearScreen();
+//            clearScreen.clearScreen();
         }
     }
 
     public void ledgerMenuLogic() {
         while (true) {
-            var s = showLedgerScreen().toUpperCase();
-            switch (s) {
-                case "A", "D", "P" -> transactionService.retrieveTransaction(s);
+            var option = showLedgerScreen().toUpperCase();
+            switch (option) {
+                case "A", "D", "P" -> transactionService.printTransactions(option);
                 case "R" -> reportScreen.reportMenuLogic();
                 case "H" -> {
                     System.out.println("Home - Return to home screen");
