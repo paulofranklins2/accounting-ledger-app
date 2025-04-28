@@ -14,7 +14,7 @@ public class HomeScreen {
             System.out.print("Select an option: ");
             return scanner.nextLine().trim().toUpperCase();
         } finally {
-            clearScreen.clearScreen();
+//            clearScreen.clearScreen();
         }
     }
 
