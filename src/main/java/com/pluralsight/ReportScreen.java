@@ -1,8 +1,12 @@
 package com.pluralsight;
 
-import static com.pluralsight.Main.*;
+import java.util.Scanner;
 
 public class ReportScreen {
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final LedgerScreen ledgerScreen = new LedgerScreen();
+    private static final HomeScreen homeScreen = new HomeScreen();
+
     private String showReportMenu() {
         System.out.println("Report Options");
         System.out.println("[1] Month To Date");

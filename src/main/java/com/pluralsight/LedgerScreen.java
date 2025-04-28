@@ -1,8 +1,13 @@
 package com.pluralsight;
 
-import static com.pluralsight.Main.*;
+import java.util.Scanner;
 
 public class LedgerScreen {
+    private static final HomeScreen homeScreen = new HomeScreen();
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final TransactionService transactionService = new TransactionService();
+    private static final ReportScreen reportScreen = new ReportScreen();
+
     private String showLedgerScreen() {
         System.out.println("Ledger Screen");
         System.out.println("[A] All - Display all entries");
