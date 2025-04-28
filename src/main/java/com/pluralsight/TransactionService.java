@@ -5,28 +5,31 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.*;
+import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.Scanner;
 
-import static com.pluralsight.Main.scanner;
+import static com.pluralsight.InputHelper.bigDecimalInput;
+import static com.pluralsight.InputHelper.stringInput;
 
 public class TransactionService {
     private static final String FILE_PATH = "src/main/resources/transactions.csv";
+    private static final Scanner scanner = new Scanner(System.in);
+
 
     private void logTransaction(Transaction transaction) {
-        var localDate = LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        var localTime = LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss"));
         var stringBuilder = new StringBuilder();
         stringBuilder
-                .append(localDate).append("|")
-                .append(localTime).append("|")
+                .append(transaction.getTransactionDate()).append("|")
+                .append(transaction.getTransactionTime()).append("|")
                 .append(transaction.getDescription()).append("|")
                 .append(transaction.getVendor()).append("|")
                 .append(transaction.getTransactionType()).append("|")
-                .append(transaction.getAmount())
-                .append("\n");
+                .append(transaction.getAmount()).append("\n");
 
         try (var fileWriter = new FileWriter(FILE_PATH, true)) {
             fileWriter.write(stringBuilder.toString().toUpperCase());
@@ -35,7 +38,7 @@ public class TransactionService {
         }
     }
 
-    public List<Transaction> getTransactions() {
+    private List<Transaction> getTransactions() {
         var transactions = new ArrayList<Transaction>();
         try (var bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
@@ -69,21 +72,46 @@ public class TransactionService {
         while (true) {
             try {
                 System.out.println("Requesting transaction information");
-                System.out.print("Enter description: ");
-                var description = scanner.nextLine();
-                System.out.print("Enter vendor: ");
-                var vendor = scanner.nextLine();
-                System.out.print("Enter amount: ");
-                var amount = scanner.nextBigDecimal();
-                if (option.equals("P")) {
-                    amount = amount.negate();
-                }
-                var newTransaction = new Transaction(description, vendor, option, amount);
-                logTransaction(newTransaction);
+                var description = stringInput("Enter description: ");
+                var vendor = stringInput("Enter vendor: ");
+                var amount = bigDecimalInput("Enter amount: ", option);
+                scanner.nextLine();
+                var date = generateDate();
+                var time = generateTime();
+
+                logTransaction(new Transaction(description, vendor, option, amount, time, date));
                 break;
             } catch (InputMismatchException e) {
                 scanner.nextLine();
                 System.out.println("Invalid input" + e.getMessage());
+            }
+        }
+    }
+
+    private LocalTime generateTime() {
+        while (true) {
+            try {
+                if (stringInput("Auto Time? (Y/N): ").equalsIgnoreCase("Y"))
+                    return LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+
+                String input = stringInput("Enter time (HH:MM): ");
+                return LocalTime.parse(input, DateTimeFormatter.ofPattern("HH:mm")).plusSeconds(LocalTime.now().getSecond());
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid time format. Please use HH:MM format.");
+            }
+        }
+    }
+
+    private LocalDate generateDate() {
+        while (true) {
+            try {
+                if (stringInput("Auto Date? (Y/N): ").equalsIgnoreCase("Y"))
+                    return LocalDate.parse(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+
+                String input = stringInput("Enter date (YYYY-MM-DD): ");
+                return LocalDate.parse(input, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+            } catch (DateTimeParseException e) {
+                System.out.println("Invalid date format. Please use YYYY-MM-DD format.");
             }
         }
     }
