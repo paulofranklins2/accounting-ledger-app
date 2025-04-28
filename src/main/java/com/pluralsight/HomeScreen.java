@@ -1,8 +1,12 @@
 package com.pluralsight;
 
-import static com.pluralsight.Main.*;
+import java.util.Scanner;
 
 public class HomeScreen {
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final TransactionService transactionService = new TransactionService();
+    private static final LedgerScreen ledgerScreen = new LedgerScreen();
+
     private String showMainMenu() {
         System.out.println("What would you like to do?");
         System.out.println("[D] Add Deposit");

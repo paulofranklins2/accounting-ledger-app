@@ -19,9 +19,4 @@ public class InputHelper {
         }
         return BigDecimal.valueOf(scanner.nextDouble());
     }
-
-    public static boolean boolInput(String input) {
-        return input.equalsIgnoreCase("Y");
-    }
-
 }
