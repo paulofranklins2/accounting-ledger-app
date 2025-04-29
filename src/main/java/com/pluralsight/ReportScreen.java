@@ -106,7 +106,13 @@ public class ReportScreen {
     }
 
     private void printTransaction(Transaction transaction) {
-        System.out.println(transaction.getTransactionDate() + "|" + transaction.getTransactionTime() + "|" + transaction.getDescription() + "|" + transaction.getVendor() + "|" + transaction.getTransactionType() + "|" + transaction.getAmount());
+        System.out.println(
+                transaction.getTransactionDate() + "|" +
+                        transaction.getTransactionTime() + "|" +
+                        transaction.getDescription() + "|" +
+                        transaction.getVendor() + "|" +
+                        transaction.getTransactionType() + "|" +
+                        transaction.getAmount());
     }
 
 }
