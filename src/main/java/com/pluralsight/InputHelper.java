@@ -2,14 +2,20 @@ package com.pluralsight;
 
 
 import java.math.BigDecimal;
-import java.util.Scanner;
+
+import static com.pluralsight.AppContext.scanner;
 
 public class InputHelper {
-    private static final Scanner scanner = new Scanner(System.in);
 
     public static String stringInput(String input) {
-        System.out.print(input);
-        return scanner.nextLine();
+        while (true) {
+            try {
+                System.out.print(input);
+                return scanner.nextLine();
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please try again.");
+            }
+        }
     }
 
     public static BigDecimal bigDecimalInput(String input, String option) {
