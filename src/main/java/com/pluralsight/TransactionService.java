@@ -8,15 +8,18 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.InputMismatchException;
+import java.util.List;
 
+import static com.pluralsight.AppContext.clearScreen;
+import static com.pluralsight.AppContext.scanner;
 import static com.pluralsight.InputHelper.bigDecimalInput;
 import static com.pluralsight.InputHelper.stringInput;
 
 public class TransactionService {
     private static final String FILE_PATH = "src/main/resources/transactions.csv";
-    private static final Scanner scanner = new Scanner(System.in);
-
 
     private void logTransaction(Transaction transaction) {
         var stringBuilder = new StringBuilder();
@@ -35,7 +38,7 @@ public class TransactionService {
         }
     }
 
-    private List<Transaction> getTransactions() {
+    public List<Transaction> getTransactions() {
         var transactions = new ArrayList<Transaction>();
         try (var bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
@@ -52,7 +55,13 @@ public class TransactionService {
 
     public void printTransactions(String option) {
         getTransactions().forEach(transaction -> {
-            var textFormat = (transaction.getTransactionDate() + "|" + transaction.getTransactionTime() + "|" + transaction.getDescription() + "|" + transaction.getVendor() + "|" + transaction.getTransactionType() + "|" + transaction.getAmount() + "\n").toUpperCase().trim();
+            var textFormat = (
+                    transaction.getTransactionDate() + "|" +
+                            transaction.getTransactionTime() + "|" +
+                            transaction.getDescription() + "|" +
+                            transaction.getVendor() + "|" +
+                            transaction.getTransactionType() + "|" +
+                            transaction.getAmount() + "\n").toUpperCase().trim();
 
             if (option.equals("P") && transaction.getTransactionType().equals("P")) {
                 System.out.println(textFormat);
@@ -64,6 +73,7 @@ public class TransactionService {
                 System.out.println(textFormat);
             }
         });
+        clearScreen.cleanLogScreen();
     }
 
     public void requestTransactionInformation(String option) {
@@ -92,7 +102,7 @@ public class TransactionService {
                 if (stringInput("Auto Time? (Y/N): ").equalsIgnoreCase("Y"))
                     return LocalTime.parse(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 
-                String input = stringInput("Enter time (HH:MM): ");
+                var input = stringInput("Enter time (HH:MM): ");
                 return LocalTime.parse(input, DateTimeFormatter.ofPattern("HH:mm")).plusSeconds(LocalTime.now().getSecond());
             } catch (DateTimeParseException e) {
                 System.out.println("Invalid time format. Please use HH:MM format.");
@@ -106,7 +116,7 @@ public class TransactionService {
                 if (stringInput("Auto Date? (Y/N): ").equalsIgnoreCase("Y"))
                     return LocalDate.parse(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
 
-                String input = stringInput("Enter date (YYYY-MM-DD): ");
+                var input = stringInput("Enter date (YYYY-MM-DD): ");
                 return LocalDate.parse(input, DateTimeFormatter.ofPattern("yyyy-MM-dd"));
             } catch (DateTimeParseException e) {
                 System.out.println("Invalid date format. Please use YYYY-MM-DD format.");
