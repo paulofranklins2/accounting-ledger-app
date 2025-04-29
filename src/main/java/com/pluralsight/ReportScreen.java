@@ -47,9 +47,7 @@ public class ReportScreen {
                     homeScreen.mainMenuLogic();
                     return;
                 }
-                default -> {
-                    System.out.println("Select a valid option");
-                }
+                default -> System.out.println("Select a valid option");
             }
         }
     }
