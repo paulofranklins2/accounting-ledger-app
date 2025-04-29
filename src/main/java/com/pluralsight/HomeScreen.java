@@ -1,24 +1,21 @@
 package com.pluralsight;
 
-import java.util.Scanner;
+import static com.pluralsight.AppContext.*;
+import static com.pluralsight.InputHelper.stringInput;
 
 public class HomeScreen {
-    private static final Scanner scanner = new Scanner(System.in);
-    private static final TransactionService transactionService = new TransactionService();
-    private static final LedgerScreen ledgerScreen = new LedgerScreen();
 
     private String showMainMenu() {
-        System.out.println("What would you like to do?");
+        System.out.println("******************* Main Screen *******************");
         System.out.println("[D] Add Deposit");
         System.out.println("[P] Make Payment");
         System.out.println("[L] Ledger");
         System.out.println("[X] Exit");
 
         try {
-            System.out.print("Select an option: ");
-            return scanner.nextLine().trim().toUpperCase();
+            return stringInput("Select an option: ").trim().toUpperCase();
         } finally {
-//            clearScreen.clearScreen();
+            clearScreen.cleanPreviousScreen();
         }
     }
 

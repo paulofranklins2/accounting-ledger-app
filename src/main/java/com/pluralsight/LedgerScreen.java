@@ -16,7 +16,7 @@ public class LedgerScreen {
             System.out.print("Select an option: ");
             return scanner.nextLine().trim().toUpperCase();
         } finally {
-//            clearScreen.clearScreen();
+            clearScreen.cleanPreviousScreen();
         }
     }
 
@@ -24,16 +24,11 @@ public class LedgerScreen {
         while (true) {
             var option = showLedgerScreen();
             switch (option) {
-                case "A", "D", "P" -> {
-                    clearScreen.cleanPreviousScreen();
-                    transactionService.printTransactions(option);
-                }
-                case "R" -> {
-                    clearScreen.cleanPreviousScreen();
-                    reportScreen.reportMenuLogic();
-                }
+                case "A", "D", "P" -> transactionService.printTransactions(option);
+
+                case "R" -> reportScreen.reportMenuLogic();
+
                 case "H" -> {
-                    clearScreen.cleanPreviousScreen();
                     homeScreen.mainMenuLogic();
                     return;
                 }
