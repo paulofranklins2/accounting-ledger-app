@@ -19,10 +19,17 @@ public class InputHelper {
     }
 
     public static BigDecimal bigDecimalInput(String input, String option) {
-        System.out.print(input);
-        if (option.equalsIgnoreCase("P")) {
-            return BigDecimal.valueOf(scanner.nextDouble()).negate();
+        while (true) {
+            System.out.print(input);
+            try {
+                if (option.equalsIgnoreCase("P")) {
+                    return BigDecimal.valueOf(scanner.nextDouble()).negate();
+                }
+                return BigDecimal.valueOf(scanner.nextDouble());
+            }catch(Exception e){
+                scanner.nextLine();
+                System.out.println("Invalid input. Please try again.");
+            }
         }
-        return BigDecimal.valueOf(scanner.nextDouble());
     }
 }
