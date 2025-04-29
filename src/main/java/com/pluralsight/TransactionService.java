@@ -8,10 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 import static com.pluralsight.InputHelper.bigDecimalInput;
 import static com.pluralsight.InputHelper.stringInput;
@@ -45,6 +42,7 @@ public class TransactionService {
             while ((line = bufferedReader.readLine()) != null) {
                 var split = line.split("\\|");
                 transactions.add(new Transaction(split[2], split[3], split[4], new BigDecimal(split[5]), LocalTime.parse(split[1]), LocalDate.parse(split[0])));
+                transactions.sort(Comparator.comparing(Transaction::getTransactionDate).reversed());
             }
         } catch (Exception e) {
             System.out.println("Error while trying to read transactions from file");
