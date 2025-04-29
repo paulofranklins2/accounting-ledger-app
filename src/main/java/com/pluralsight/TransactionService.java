@@ -10,7 +10,6 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.InputMismatchException;
 import java.util.List;
 
 import static com.pluralsight.AppContext.clearScreen;
@@ -63,37 +62,24 @@ public class TransactionService {
                             transaction.getTransactionType() + "|" +
                             transaction.getAmount() + "\n").toUpperCase().trim();
 
-            if (option.equals("P") && transaction.getTransactionType().equals("P")) {
-                System.out.println(textFormat);
-            }
-            if (option.equals("D") && transaction.getTransactionType().equals("D")) {
-                System.out.println(textFormat);
-            }
-            if (option.equals("A")) {
-                System.out.println(textFormat);
-            }
+            if (option.equals("P") && transaction.getTransactionType().equals("P")) System.out.println(textFormat);
+            if (option.equals("D") && transaction.getTransactionType().equals("D")) System.out.println(textFormat);
+            if (option.equals("A")) System.out.println(textFormat);
         });
         clearScreen.cleanLogScreen();
     }
 
     public void requestTransactionInformation(String option) {
-        while (true) {
-            try {
-                System.out.println("Requesting transaction information");
-                var description = stringInput("Enter description: ");
-                var vendor = stringInput("Enter vendor: ");
-                var amount = bigDecimalInput("Enter amount: ", option);
-                scanner.nextLine();
-                var date = generateDate();
-                var time = generateTime();
+        System.out.println("Requesting transaction information");
+        var description = stringInput("Enter description: ");
+        var vendor = stringInput("Enter vendor: ");
+        var amount = bigDecimalInput("Enter amount: ", option);
+        scanner.nextLine();
+        var date = generateDate();
+        var time = generateTime();
 
-                logTransaction(new Transaction(description, vendor, option, amount, time, date));
-                break;
-            } catch (InputMismatchException e) {
-                scanner.nextLine();
-                System.out.println("Invalid input" + e.getMessage());
-            }
-        }
+        logTransaction(new Transaction(description, vendor, option, amount, time, date));
+        clearScreen.cleanPreviousScreen();
     }
 
     private LocalTime generateTime() {
