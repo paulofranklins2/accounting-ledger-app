@@ -6,6 +6,7 @@ import static com.pluralsight.InputHelper.stringInput;
 public class HomeScreen {
 
     private String showMainMenu() {
+        clearScreen.cleanPreviousScreen();
         System.out.println("******************* Main Screen *******************");
         System.out.println("[D] Add Deposit");
         System.out.println("[P] Make Payment");

@@ -21,12 +21,13 @@ public class InputHelper {
     public static BigDecimal bigDecimalInput(String input, String option) {
         while (true) {
             System.out.print(input);
+
             try {
                 if (option.equalsIgnoreCase("P")) {
                     return BigDecimal.valueOf(scanner.nextDouble()).negate();
                 }
                 return BigDecimal.valueOf(scanner.nextDouble());
-            }catch(Exception e){
+            } catch (Exception e) {
                 scanner.nextLine();
                 System.out.println("Invalid input. Please try again.");
             }

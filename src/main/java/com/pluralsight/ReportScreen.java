@@ -114,5 +114,4 @@ public class ReportScreen {
                         transaction.getTransactionType() + "|" +
                         transaction.getAmount());
     }
-
 }
