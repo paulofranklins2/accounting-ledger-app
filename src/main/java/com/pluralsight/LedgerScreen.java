@@ -25,9 +25,7 @@ public class LedgerScreen {
             var option = showLedgerScreen();
             switch (option) {
                 case "A", "D", "P" -> transactionService.printTransactions(option);
-
                 case "R" -> reportScreen.reportMenuLogic();
-
                 case "H" -> {
                     homeScreen.mainMenuLogic();
                     return;
