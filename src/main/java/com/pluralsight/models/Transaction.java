@@ -1,4 +1,4 @@
-package com.pluralsight;
+package com.pluralsight.models;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,12 +28,5 @@ public class Transaction {
         this.amount = amount;
         this.transactionTime = transactionTime;
         this.transactionDate = transactionDate;
-    }
-
-    public Transaction(String description, String vendor, String transactionType, BigDecimal amount) {
-        this.description = description;
-        this.vendor = vendor;
-        this.transactionType = transactionType;
-        this.amount = amount;
     }
 }

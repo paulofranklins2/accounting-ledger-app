@@ -1,4 +1,10 @@
-package com.pluralsight;
+package com.pluralsight.app;
+
+import com.pluralsight.screens.ClearScreen;
+import com.pluralsight.screens.HomeScreen;
+import com.pluralsight.screens.LedgerScreen;
+import com.pluralsight.screens.ReportScreen;
+import com.pluralsight.services.TransactionService;
 
 import java.util.Scanner;
 

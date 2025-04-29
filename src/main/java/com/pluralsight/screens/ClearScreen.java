@@ -1,6 +1,6 @@
-package com.pluralsight;
+package com.pluralsight.screens;
 
-import static com.pluralsight.InputHelper.stringInput;
+import static com.pluralsight.services.InputHelper.stringInput;
 
 public class ClearScreen {
 

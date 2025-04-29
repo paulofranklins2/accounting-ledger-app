@@ -1,9 +1,9 @@
-package com.pluralsight;
+package com.pluralsight.services;
 
 
 import java.math.BigDecimal;
 
-import static com.pluralsight.AppContext.scanner;
+import static com.pluralsight.app.AppContext.scanner;
 
 public class InputHelper {
 

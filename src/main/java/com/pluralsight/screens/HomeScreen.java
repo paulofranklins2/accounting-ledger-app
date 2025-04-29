@@ -1,7 +1,7 @@
-package com.pluralsight;
+package com.pluralsight.screens;
 
-import static com.pluralsight.AppContext.*;
-import static com.pluralsight.InputHelper.stringInput;
+import static com.pluralsight.app.AppContext.*;
+import static com.pluralsight.services.InputHelper.stringInput;
 
 public class HomeScreen {
 

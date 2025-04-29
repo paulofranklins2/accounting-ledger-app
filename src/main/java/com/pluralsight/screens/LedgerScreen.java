@@ -1,6 +1,6 @@
-package com.pluralsight;
+package com.pluralsight.screens;
 
-import static com.pluralsight.AppContext.*;
+import static com.pluralsight.app.AppContext.*;
 
 public class LedgerScreen {
 

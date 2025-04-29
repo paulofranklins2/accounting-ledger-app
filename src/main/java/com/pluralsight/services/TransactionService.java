@@ -1,4 +1,6 @@
-package com.pluralsight;
+package com.pluralsight.services;
+
+import com.pluralsight.models.Transaction;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,10 +14,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.pluralsight.AppContext.clearScreen;
-import static com.pluralsight.AppContext.scanner;
-import static com.pluralsight.InputHelper.bigDecimalInput;
-import static com.pluralsight.InputHelper.stringInput;
+import static com.pluralsight.app.AppContext.clearScreen;
+import static com.pluralsight.app.AppContext.scanner;
+import static com.pluralsight.services.InputHelper.bigDecimalInput;
+import static com.pluralsight.services.InputHelper.stringInput;
 
 public class TransactionService {
     private static final String FILE_PATH = "src/main/resources/transactions.csv";
