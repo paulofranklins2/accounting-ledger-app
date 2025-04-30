@@ -11,7 +11,7 @@ public class ClearScreen {
     }
 
     public void cleanLogScreen() {
-        stringInput("Press any key to continue: ");
+        stringInput("Press ENTER to continue: ");
         cleanPreviousScreen();
     }
 }

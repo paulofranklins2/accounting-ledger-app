@@ -58,7 +58,7 @@
 - [x] Verify file saving/loading
 - [x] Ensure UI clarity and consistency
 - [x] Commit all final changes
--
+
 ## 🧪 Presentation Preparation
 - [x] Run through all screens and flows
 - [x] Pick and explain one piece of interesting logic

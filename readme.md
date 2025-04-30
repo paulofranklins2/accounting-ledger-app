@@ -3,8 +3,29 @@
 This is a command-line application built in Java that allows users to track financial transactions for personal or business use. It's the first capstone project for the Java Development Fundamentals course and a great starting point for showcasing Java skills in a real-world context.
 
 ## 📌 Project Overview
-
 The Accounting Ledger CLI app is designed to help users easily add deposits, make payments, and view a running ledger of transactions. All data is stored in a `.csv` file to keep things simple and portable. The interface is entirely menu-driven and runs in the terminal.
+
+---
+
+### 🖼️ Screenshots
+
+#### 1. **Home Screen**
+![Home Screen](images/screenshots/img.png)
+
+#### 2. **Ledger Screen**
+![Add Deposit](images/screenshots/img_1.png)
+
+#### 4. **Reports Section**
+![Reports](images/screenshots/img_5.png)
+
+#### 3. **Ledger All Transactions View**
+![Ledger View](images/screenshots/img_2.png)
+
+#### 3. **Ledger All Deposits View**
+![Ledger View](images/screenshots/img_3.png)
+
+#### 3. **Ledger All Payments View**
+![Ledger View](images/screenshots/img_4.png)
 
 ## 📊 Project Status
 
