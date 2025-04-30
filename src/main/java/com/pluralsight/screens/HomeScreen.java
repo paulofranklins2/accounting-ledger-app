@@ -1,5 +1,9 @@
 package com.pluralsight.screens;
 
+import com.pluralsight.gui.AccountingLedgerGUI;
+
+import javax.swing.*;
+
 import static com.pluralsight.app.AppContext.*;
 import static com.pluralsight.services.InputHelper.stringInput;
 
@@ -36,6 +40,20 @@ public class HomeScreen {
     }
 
     public void start() {
-        mainMenuLogic();
+        while (true) {
+            try {
+                System.out.println("[1] CLI");
+                System.out.println("[2] UI");
+                System.out.println("[0] Exit");
+                var option = stringInput("Choose option: ").trim();
+                switch (option) {
+                    case "1" -> mainMenuLogic();
+                    case "2" -> SwingUtilities.invokeLater(AccountingLedgerGUI::new);
+                    case "0" -> System.exit(0);
+                }
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }
