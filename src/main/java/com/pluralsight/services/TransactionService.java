@@ -22,7 +22,7 @@ import static com.pluralsight.services.InputHelper.stringInput;
 public class TransactionService {
     private static final String FILE_PATH = "src/main/resources/transactions.csv";
 
-    private void logTransaction(Transaction transaction) {
+    public void logTransaction(Transaction transaction) {
         var stringBuilder = new StringBuilder();
         stringBuilder
                 .append(transaction.getTransactionDate()).append("|")
@@ -46,8 +46,8 @@ public class TransactionService {
             while ((line = bufferedReader.readLine()) != null) {
                 var split = line.split("\\|");
                 transactions.add(new Transaction(split[2], split[3], split[4], new BigDecimal(split[5]), LocalTime.parse(split[1]), LocalDate.parse(split[0])));
-                transactions.sort(Comparator.comparing(Transaction::getTransactionDate).reversed());
             }
+            transactions.sort(Comparator.comparing(Transaction::getTransactionDate).thenComparing(Transaction::getTransactionTime).reversed());
         } catch (Exception e) {
             System.out.println("Error while trying to read transactions from file");
         }
