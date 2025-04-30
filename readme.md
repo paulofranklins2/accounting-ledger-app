@@ -8,7 +8,8 @@ The Accounting Ledger CLI app is designed to help users easily add deposits, mak
 
 ## 📊 Project Status
 
-🚧 Work in progress. See [TODO.md](TODO.md) for planned features and development progress.
+- Work in progress. See [TODO.md](TODO.md) for planned features and development progress.
+- For detailed tracking, check the [Project Board](https://github.com/users/paulofranklins2/projects/2/views/1) for the full process.
 
 ## 💡 Features
 
