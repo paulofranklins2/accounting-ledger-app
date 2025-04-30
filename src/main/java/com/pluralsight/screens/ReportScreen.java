@@ -2,6 +2,7 @@ package com.pluralsight.screens;
 
 import com.pluralsight.models.Transaction;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 import static com.pluralsight.app.AppContext.*;
@@ -37,9 +38,7 @@ public class ReportScreen {
                 case "4" -> printPreviousYear();
                 case "5" -> searchByVendor(stringInput("Enter vendor name: "));
                 case "6" -> {
-                    LocalDate start = LocalDate.parse(stringInput("Enter start date (yyyy-mm-dd): "));
-                    LocalDate end = LocalDate.parse(stringInput("Enter end date (yyyy-mm-dd): "));
-                    customSearch(start, end);
+                    customSearch();
                 }
                 case "0" -> {
                     ledgerScreen.ledgerMenuLogic();
@@ -93,9 +92,50 @@ public class ReportScreen {
         clearScreen.cleanLogScreen();
     }
 
-    public void customSearch(LocalDate start, LocalDate end) {
-        printTransactionsBetween(start, end);
+    public void customSearch() {
+        String startInput = stringInput("Enter start date (yyyy-mm-dd) or leave blank: ").trim();
+        String endInput = stringInput("Enter end date (yyyy-mm-dd) or leave blank: ").trim();
+        String description = stringInput("Enter description or leave blank: ").trim();
+        String vendor = stringInput("Enter vendor or leave blank: ").trim();
+        String amountInput = stringInput("Enter amount or leave blank: ").trim();
+
+        LocalDate startDate = null;
+        LocalDate endDate = null;
+        Double amount = null;
+
+        try {
+            if (!startInput.isEmpty()) {
+                startDate = LocalDate.parse(startInput);
+            }
+            if (!endInput.isEmpty()) {
+                endDate = LocalDate.parse(endInput);
+            }
+            if (!amountInput.isEmpty()) {
+                amount = Double.parseDouble(amountInput);
+            }
+        } catch (Exception e) {
+            System.out.println("Invalid input format. Please try again.");
+            return;
+        }
+
+        for (var transaction : transactionService.getTransactions()) {
+            LocalDate date = transaction.getTransactionDate();
+            boolean matches = true;
+
+            if (startDate != null && date.isBefore(startDate)) matches = false;
+            if (endDate != null && date.isAfter(endDate)) matches = false;
+            if (!description.isEmpty() && !transaction.getDescription().toLowerCase().contains(description.toLowerCase())) matches = false;
+            if (!vendor.isEmpty() && !transaction.getVendor().equalsIgnoreCase(vendor)) matches = false;
+            if (amount != null && transaction.getAmount().compareTo(BigDecimal.valueOf(amount)) != 0) matches = false;
+
+            if (matches) {
+                printTransaction(transaction);
+            }
+        }
+
+        clearScreen.cleanLogScreen();
     }
+
 
     private void printTransactionsBetween(LocalDate start, LocalDate end) {
         for (var transaction : transactionService.getTransactions()) {
