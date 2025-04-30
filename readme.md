@@ -6,6 +6,10 @@ This is a command-line application built in Java that allows users to track fina
 
 The Accounting Ledger CLI app is designed to help users easily add deposits, make payments, and view a running ledger of transactions. All data is stored in a `.csv` file to keep things simple and portable. The interface is entirely menu-driven and runs in the terminal.
 
+## 📊 Project Status
+
+🚧 Work in progress. See [TODO.md](TODO.md) for planned features and development progress.
+
 ## 💡 Features
 
 - **Add Deposits and Payments**  
