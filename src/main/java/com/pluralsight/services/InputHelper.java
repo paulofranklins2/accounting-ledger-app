@@ -26,7 +26,7 @@ public class InputHelper {
                 if (option.equalsIgnoreCase("P")) {
                     return BigDecimal.valueOf(scanner.nextDouble()).negate();
                 }
-                return BigDecimal.valueOf(scanner.nextDouble());
+                return BigDecimal.valueOf(Math.abs(scanner.nextDouble()));
             } catch (Exception e) {
                 scanner.nextLine();
                 System.out.println("Invalid input. Please try again.");
