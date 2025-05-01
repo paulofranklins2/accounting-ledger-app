@@ -25,9 +25,9 @@ public class TransactionService {
 
     public void saveTransactionToFile(Transaction transaction) {
         try (var fileWriter = new FileWriter(FILE_PATH, true)) {
-            fileWriter.write(transaction.logTransationString().toUpperCase());
+            fileWriter.write(transaction.saveTransactionToString().toUpperCase());
 
-            System.out.println("Saved: " + transaction.logTransationString().toUpperCase().trim());
+            System.out.println("Saved: " + transaction.saveTransactionToString().toUpperCase().trim());
             screenUtils.pauseAndClearScreen();
         } catch (Exception e) {
             System.out.println("Error while trying to log transaction to file");
@@ -35,7 +35,7 @@ public class TransactionService {
     }
 
     public List<Transaction> getTransactions() {
-        List<Transaction> transactions = new ArrayList<>();
+        var transactions = new ArrayList<Transaction>();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
@@ -54,7 +54,7 @@ public class TransactionService {
                     var type = split[4];
                     var amount = new BigDecimal(split[5]);
 
-                    transactions.add(new Transaction(description, vendor, type, amount, time, date));
+                    transactions.add(new Transaction(date, time, description, vendor, type, amount));
                 } catch (Exception ex) {
                     System.out.println("Error parsing line, skipping: " + line);
                 }
@@ -72,21 +72,20 @@ public class TransactionService {
     }
 
     public void displayTransactionsByType(String option) {
-        if (option.equals(TransactionType.ALL.getValue())) System.out.println("******************* All Transactions Screen *******************");
-        if (option.equals(TransactionType.DEPOSIT.getValue())) System.out.println("******************* Deposit Screen *******************");
-        if (option.equals(TransactionType.PAYMENT.getValue())) System.out.println("******************* Payment Screen *******************");
+        screenUtils.printTransactionScreenHeader(option);
 
         getTransactions().forEach(transaction -> {
-            if (option.equals(TransactionType.PAYMENT.getValue()) && transaction.getTransactionType().equals(TransactionType.PAYMENT.getValue())) System.out.println(transaction);
-            if (option.equals(TransactionType.DEPOSIT.getValue()) && transaction.getTransactionType().equals(TransactionType.DEPOSIT.getValue())) System.out.println(transaction);
+            if (option.equals(TransactionType.PAYMENT.getValue()) && transaction.getTransactionType().equals(TransactionType.PAYMENT.getValue()))
+                System.out.println(transaction);
+            if (option.equals(TransactionType.DEPOSIT.getValue()) && transaction.getTransactionType().equals(TransactionType.DEPOSIT.getValue()))
+                System.out.println(transaction);
             if (option.equals(TransactionType.ALL.getValue())) System.out.println(transaction);
         });
         screenUtils.pauseAndClearScreen();
     }
 
     public void createTransactionFromInput(String option) {
-        if (option.equals(TransactionType.PAYMENT.getValue())) System.out.println("******************* Payment Screen *******************");
-        else System.out.println("******************* Deposit Screen *******************");
+        screenUtils.printTransactionScreenHeader(option);
 
         var description = stringInput("Enter Description: ");
         var vendor = stringInput("Enter Vendor: ");
@@ -95,7 +94,7 @@ public class TransactionService {
         var date = promptForTransactionTime();
         var time = promptForTransactionDate();
 
-        saveTransactionToFile(new Transaction(description, vendor, option, amount, time, date));
+        saveTransactionToFile(new Transaction(date, time, description, vendor, option, amount));
         screenUtils.clearConsole();
     }
 

@@ -52,10 +52,10 @@ public class AccountingLedgerGUI extends JFrame {
         JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 15, 15));
         buttonPanel.setBorder(new EmptyBorder(50, 150, 50, 150));
 
-        JButton depositButton = createStyledButton("Add Deposit");
-        JButton paymentButton = createStyledButton("Make Payment");
-        JButton ledgerButton = createStyledButton("View Ledger");
-        JButton exitButton = createStyledButton("Exit");
+        var depositButton = createStyledButton("Add Deposit");
+        var paymentButton = createStyledButton("Make Payment");
+        var ledgerButton = createStyledButton("View Ledger");
+        var exitButton = createStyledButton("Exit");
 
         depositButton.addActionListener(e -> showTransactionDialog("D"));
         paymentButton.addActionListener(e -> showTransactionDialog("P"));
@@ -72,19 +72,19 @@ public class AccountingLedgerGUI extends JFrame {
     }
 
     private JPanel createLedgerPanel() {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
+        var panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         // Main content panel
-        JPanel contentPanel = new JPanel(new GridLayout(5, 1, 15, 15));
+        var contentPanel = new JPanel(new GridLayout(5, 1, 15, 15));
         contentPanel.setBorder(new EmptyBorder(50, 150, 50, 150));
 
         // Create styled buttons
-        JButton allEntriesButton = createStyledButton("All Entries");
-        JButton depositsButton = createStyledButton("Deposits Only");
-        JButton paymentsButton = createStyledButton("Payments Only");
-        JButton reportsButton = createStyledButton("View Reports");
-        JButton backButton = createStyledButton("Back to Home");
+        var allEntriesButton = createStyledButton("All Entries");
+        var depositsButton = createStyledButton("Deposits Only");
+        var paymentsButton = createStyledButton("Payments Only");
+        var reportsButton = createStyledButton("View Reports");
+        var backButton = createStyledButton("Back to Home");
 
         // Add action listeners
         allEntriesButton.addActionListener(e -> showTransactionsDialog(
@@ -121,13 +121,13 @@ public class AccountingLedgerGUI extends JFrame {
     }
 
     private JPanel createReportPanel() {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
+        var panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(new EmptyBorder(10, 10, 10, 10));
 
         // Navigation Bar
-        JPanel navPanel = new JPanel(new GridLayout(1, 2, 5, 5));
-        JButton backToLedgerButton = createStyledButton("Back to Ledger");
-        JButton backToHomeButton = createStyledButton("Back to Home");
+        var navPanel = new JPanel(new GridLayout(1, 2, 5, 5));
+        var backToLedgerButton = createStyledButton("Back to Ledger");
+        var backToHomeButton = createStyledButton("Back to Home");
         backToLedgerButton.addActionListener(e -> cardLayout.show(mainPanel, "LEDGER"));
         backToHomeButton.addActionListener(e -> cardLayout.show(mainPanel, "HOME"));
         navPanel.add(backToLedgerButton);
@@ -135,7 +135,7 @@ public class AccountingLedgerGUI extends JFrame {
         panel.add(navPanel, BorderLayout.NORTH);
 
         // Report Options
-        JPanel reportPanel = new JPanel(new GridLayout(6, 1, 10, 10));
+        var reportPanel = new JPanel(new GridLayout(6, 1, 10, 10));
         reportPanel.setBorder(new EmptyBorder(20, 100, 20, 100));
         String[] reports = {
                 "Month to Date",
@@ -152,14 +152,14 @@ public class AccountingLedgerGUI extends JFrame {
             reportPanel.add(button);
         }
 
-        JScrollPane scrollPane = new JScrollPane(reportPanel);
+        var scrollPane = new JScrollPane(reportPanel);
         panel.add(scrollPane, BorderLayout.CENTER);
 
         return panel;
     }
 
     private JButton createStyledButton(String text) {
-        JButton button = new JButton(text);
+        var button = new JButton(text);
         button.setFont(new Font("Tahoma", Font.BOLD, 14));
         button.setFocusPainted(false);
         button.setBackground(new Color(240, 240, 240));
@@ -171,15 +171,15 @@ public class AccountingLedgerGUI extends JFrame {
     }
 
     private void showTransactionDialog(String type) {
-        JDialog dialog = new JDialog(this, type.equals("D") ? "Add Deposit" : "Make Payment", true);
-        JPanel panel = new JPanel(new GridLayout(6, 2, 10, 10));
+        var dialog = new JDialog(this, type.equals("D") ? "Add Deposit" : "Make Payment", true);
+        var panel = new JPanel(new GridLayout(6, 2, 10, 10));
         panel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
-        JTextField descriptionField = new JTextField();
-        JTextField vendorField = new JTextField();
-        JTextField amountField = new JTextField();
-        JTextField dateField = new JTextField(LocalDate.now().toString());
-        JTextField timeField = new JTextField(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
+        var descriptionField = new JTextField();
+        var vendorField = new JTextField();
+        var amountField = new JTextField();
+        var dateField = new JTextField(LocalDate.now().toString());
+        var timeField = new JTextField(LocalTime.now().format(DateTimeFormatter.ofPattern("HH:mm")));
 
         panel.add(new JLabel("Description:"));
         panel.add(descriptionField);
@@ -192,18 +192,16 @@ public class AccountingLedgerGUI extends JFrame {
         panel.add(new JLabel("Time (HH:MM):"));
         panel.add(timeField);
 
-        JButton submitButton = createStyledButton("Submit");
+        var submitButton = createStyledButton("Submit");
         submitButton.addActionListener(e -> {
             try {
-                Transaction transaction = new Transaction(
-                        descriptionField.getText(),
+                var transaction = new Transaction(
+                        LocalDate.parse(dateField.getText()), LocalTime.parse(timeField.getText(), DateTimeFormatter.ofPattern("HH:mm")), descriptionField.getText(),
                         vendorField.getText(),
                         type,
-                        new BigDecimal(amountField.getText()),
-                        LocalTime.parse(timeField.getText(), DateTimeFormatter.ofPattern("HH:mm")),
-                        LocalDate.parse(dateField.getText())
+                        new BigDecimal(amountField.getText())
                 );
-                transactionService.logTransaction(transaction);
+                transactionService.saveTransactionToFile(transaction);
                 dialog.dispose();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(dialog, "Invalid input format");
@@ -221,35 +219,35 @@ public class AccountingLedgerGUI extends JFrame {
 
     private void showTransactionsDialog(List<Transaction> transactions, String title) {
         JDialog dialog = new JDialog(this, title, true);
-        JTextArea textArea = new JTextArea(20, 60);
+        var textArea = new JTextArea(20, 60);
         textArea.setEditable(false);
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
 
-        StringBuilder sb = new StringBuilder();
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
+        var stringBuilder = new StringBuilder();
+        var timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
 
         // Header
-        sb.append(String.format("%-12s %-8s %-20s %-15s %-8s %10s\n",
+        stringBuilder.append(String.format("%-12s %-8s %-20s %-15s %-8s %10s\n",
                 "Date", "Time", "Description", "Vendor", "Type", "Amount"));
-        sb.append("-".repeat(80)).append("\n");
+        stringBuilder.append("-".repeat(80)).append("\n");
 
         // Transactions
-        for (Transaction t : transactions) {
-            sb.append(String.format("%-12s %-8s %-20s %-15s %-8s %10.2f\n",
-                    t.getTransactionDate(),
-                    t.getTransactionTime().format(timeFormatter),
-                    t.getDescription(),
-                    t.getVendor(),
-                    t.getTransactionType(),
-                    t.getAmount()));
+        for (Transaction transaction : transactions) {
+            stringBuilder.append(String.format("%-12s %-8s %-20s %-15s %-8s %10.2f\n",
+                    transaction.getTransactionDate(),
+                    transaction.getTransactionTime().format(timeFormatter),
+                    transaction.getDescription(),
+                    transaction.getVendor(),
+                    transaction.getTransactionType(),
+                    transaction.getAmount()));
         }
 
-        textArea.setText(sb.toString());
-        JScrollPane scrollPane = new JScrollPane(textArea);
+        textArea.setText(stringBuilder.toString());
+        var scrollPane = new JScrollPane(textArea);
         scrollPane.setPreferredSize(new Dimension(800, 400));
 
-        JPanel buttonPanel = new JPanel();
-        JButton closeButton = createStyledButton("Close");
+        var buttonPanel = new JPanel();
+        var closeButton = createStyledButton("Close");
         closeButton.addActionListener(e -> dialog.dispose());
 
         dialog.setLayout(new BorderLayout());
@@ -263,7 +261,7 @@ public class AccountingLedgerGUI extends JFrame {
     private class ReportButtonListener implements ActionListener {
         @Override
         public void actionPerformed(ActionEvent e) {
-            String command = e.getActionCommand();
+            var command = e.getActionCommand();
             try {
                 switch (command) {
                     case "Month to Date":
@@ -293,7 +291,7 @@ public class AccountingLedgerGUI extends JFrame {
         }
 
         private void handleDateFilter(LocalDate start, LocalDate end, String title) {
-            List<Transaction> filtered = transactionService.getTransactions().stream()
+            var filtered = transactionService.getTransactions().stream()
                     .filter(t -> !t.getTransactionDate().isBefore(start) && !t.getTransactionDate().isAfter(end))
                     .toList();
 
@@ -301,10 +299,10 @@ public class AccountingLedgerGUI extends JFrame {
         }
 
         private void handleVendorSearch() {
-            String vendor = JOptionPane.showInputDialog(AccountingLedgerGUI.this, "Enter vendor name:");
+            var vendor = JOptionPane.showInputDialog(AccountingLedgerGUI.this, "Enter vendor name:");
             if (vendor == null || vendor.trim().isEmpty()) return;
 
-            List<Transaction> filtered = transactionService.getTransactions().stream()
+            var filtered = transactionService.getTransactions().stream()
                     .filter(t -> t.getVendor().equalsIgnoreCase(vendor.trim()))
                     .toList();
 
@@ -313,19 +311,19 @@ public class AccountingLedgerGUI extends JFrame {
 
         private void handleCustomSearch() {
             // Create input panel with consistent styling
-            JPanel panel = new JPanel(new GridLayout(5, 2, 10, 10));
+            var panel = new JPanel(new GridLayout(5, 2, 10, 10));
             panel.setBorder(new EmptyBorder(15, 20, 15, 20));
 
             // Create input fields with tooltips
-            JTextField startField = new JTextField();
+            var startField = new JTextField();
             startField.setToolTipText("Leave blank for no start date filter");
-            JTextField endField = new JTextField();
+            var endField = new JTextField();
             endField.setToolTipText("Leave blank for no end date filter");
-            JTextField descField = new JTextField();
+            var descField = new JTextField();
             descField.setToolTipText("Partial match, case insensitive");
-            JTextField vendorField = new JTextField();
+            var vendorField = new JTextField();
             vendorField.setToolTipText("Exact match, case insensitive");
-            JTextField amountField = new JTextField();
+            var amountField = new JTextField();
             amountField.setToolTipText("Exact amount match");
 
             // Add components with styled labels
@@ -352,11 +350,11 @@ public class AccountingLedgerGUI extends JFrame {
             if (result == JOptionPane.OK_OPTION) {
                 try {
                     // Parse inputs with null-safe methods
-                    LocalDate startDate = parseDate(startField.getText().trim());
-                    LocalDate endDate = parseDate(endField.getText().trim());
-                    String description = descField.getText().trim().toLowerCase();
-                    String vendor = vendorField.getText().trim();
-                    BigDecimal amount = parseAmount(amountField.getText().trim());
+                    var startDate = parseDate(startField.getText().trim());
+                    var endDate = parseDate(endField.getText().trim());
+                    var description = descField.getText().trim().toLowerCase();
+                    var vendor = vendorField.getText().trim();
+                    var amount = parseAmount(amountField.getText().trim());
 
                     // Validate date range
                     if (startDate != null && endDate != null && startDate.isAfter(endDate)) {
@@ -389,7 +387,7 @@ public class AccountingLedgerGUI extends JFrame {
         }
 
         private JLabel createInputLabel(String text) {
-            JLabel label = new JLabel(text);
+            var label = new JLabel(text);
             label.setFont(new Font("Tahoma", Font.PLAIN, 12));
             return label;
         }
@@ -417,28 +415,28 @@ public class AccountingLedgerGUI extends JFrame {
                 return;
             }
 
-            JDialog dialog = new JDialog(AccountingLedgerGUI.this, title, true);
-            JTextArea textArea = new JTextArea();
+            var dialog = new JDialog(AccountingLedgerGUI.this, title, true);
+            var textArea = new JTextArea();
             textArea.setEditable(false);
             textArea.setFont(new Font("Monospaced", Font.PLAIN, 14));
 
-            StringBuilder sb = new StringBuilder();
-            sb.append(String.format("%-12s %-8s %-20s %-15s %-8s %10s\n",
+            var stringBuilder = new StringBuilder();
+            stringBuilder.append(String.format("%-12s %-8s %-20s %-15s %-8s %10s\n",
                     "Date", "Time", "Description", "Vendor", "Type", "Amount"));
-            sb.append("-".repeat(80)).append("\n");
+            stringBuilder.append("-".repeat(80)).append("\n");
 
-            for (Transaction t : transactions) {
-                sb.append(String.format("%-12s %-8s %-20s %-15s %-8s %10.2f\n",
-                        t.getTransactionDate(),
-                        t.getTransactionTime().format(DateTimeFormatter.ofPattern("HH:mm")),
-                        t.getDescription(),
-                        t.getVendor(),
-                        t.getTransactionType(),
-                        t.getAmount()));
+            for (Transaction transaction : transactions) {
+                stringBuilder.append(String.format("%-12s %-8s %-20s %-15s %-8s %10.2f\n",
+                        transaction.getTransactionDate(),
+                        transaction.getTransactionTime().format(DateTimeFormatter.ofPattern("HH:mm")),
+                        transaction.getDescription(),
+                        transaction.getVendor(),
+                        transaction.getTransactionType(),
+                        transaction.getAmount()));
             }
 
-            textArea.setText(sb.toString());
-            JScrollPane scrollPane = new JScrollPane(textArea);
+            textArea.setText(stringBuilder.toString());
+            var scrollPane = new JScrollPane(textArea);
             scrollPane.setPreferredSize(new Dimension(800, 400));
             dialog.add(scrollPane);
             dialog.pack();
