@@ -32,17 +32,32 @@ public class ReportScreen {
         while (true) {
             var option = showReportMenu();
             switch (option) {
-                case "1" -> printMonthToDate();
-                case "2" -> printPreviousMonth();
-                case "3" -> printYearToDate();
-                case "4" -> printPreviousYear();
-                case "5" -> searchByVendor(stringInput("Enter vendor name: "));
-                case "6" -> customSearch();
-                case "0" -> ledgerScreen.ledgerMenuLogic();
-                case "H" -> {
-                    homeScreen.mainMenuLogic();
-                    return;
+                case "1" -> {
+                    System.out.println("******************* Month To Date Screen *******************");
+                    printMonthToDate();
                 }
+                case "2" -> {
+                    System.out.println("******************* Previous Month To Date Screen ******************");
+                    printPreviousMonth();
+                }
+                case "3" -> {
+                    System.out.println("******************* Year To Date Screen ******************");
+                    printYearToDate();
+                }
+                case "4" -> {
+                    System.out.println("******************* Previous Year To Date Screen ******************");
+                    printPreviousYear();
+                }
+                case "5" -> {
+                    System.out.println("******************* Search by Vendor Screen ******************");
+                    searchByVendor(stringInput("Enter vendor name: "));
+                }
+                case "6" -> {
+                    System.out.println("******************* Custom Search Screen ******************");
+                    customSearch();
+                }
+                case "0" -> ledgerScreen.ledgerMenuLogic();
+                case "H" -> homeScreen.mainMenuLogic();
                 default -> System.out.println("Select a valid option");
             }
         }
@@ -51,7 +66,6 @@ public class ReportScreen {
     public void printMonthToDate() {
         var now = LocalDate.now();
         var firstDayOfMonth = now.withDayOfMonth(1);
-
         printTransactionsBetween(firstDayOfMonth, now);
     }
 
@@ -59,14 +73,12 @@ public class ReportScreen {
         var today = LocalDate.now();
         var first = today.minusMonths(1).withDayOfMonth(1);
         var last = today.withDayOfMonth(1).minusDays(1);
-
         printTransactionsBetween(first, last);
     }
 
     public void printYearToDate() {
         var first = LocalDate.of(LocalDate.now().getYear(), 1, 1);
         var today = LocalDate.now();
-
         printTransactionsBetween(first, today);
     }
 
@@ -74,15 +86,13 @@ public class ReportScreen {
         var lastYear = LocalDate.now().getYear() - 1;
         var first = LocalDate.of(lastYear, 1, 1);
         var last = LocalDate.of(lastYear, 12, 31);
-
         printTransactionsBetween(first, last);
     }
 
     public void searchByVendor(String vendor) {
         for (var transaction : transactionService.getTransactions()) {
-            if (transaction.getVendor().equalsIgnoreCase(vendor)) {
-                printTransaction(transaction);
-            }
+            if (transaction.getVendor().equalsIgnoreCase(vendor))
+                System.out.println(transaction);
         }
         clearScreen.cleanLogScreen();
     }
@@ -125,25 +135,20 @@ public class ReportScreen {
             if (amount != null && transaction.getAmount().compareTo(BigDecimal.valueOf(amount)) != 0) matches = false;
 
             if (matches) {
-                printTransaction(transaction);
+                System.out.println(transaction);
             }
         }
-
         clearScreen.cleanLogScreen();
     }
-
 
     private void printTransactionsBetween(LocalDate start, LocalDate end) {
         for (var transaction : transactionService.getTransactions()) {
             var date = transaction.getTransactionDate();
             if (!date.isBefore(start) && !date.isAfter(end)) {
-                printTransaction(transaction);
+                System.out.println(transaction);
             }
         }
         clearScreen.cleanLogScreen();
     }
 
-    private void printTransaction(Transaction transaction) {
-        System.out.println(transaction.getTransactionDate() + "|" + transaction.getTransactionTime() + "|" + transaction.getDescription() + "|" + transaction.getVendor() + "|" + transaction.getTransactionType() + "|" + transaction.getAmount());
-    }
 }
