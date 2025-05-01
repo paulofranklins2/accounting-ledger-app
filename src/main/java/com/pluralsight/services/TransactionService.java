@@ -1,5 +1,6 @@
 package com.pluralsight.services;
 
+import com.pluralsight.TransactionType;
 import com.pluralsight.models.Transaction;
 
 import java.io.BufferedReader;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-import static com.pluralsight.app.AppContext.clearScreen;
+import static com.pluralsight.app.AppContext.screenUtils;
 import static com.pluralsight.app.AppContext.scanner;
 import static com.pluralsight.services.InputHelper.bigDecimalInput;
 import static com.pluralsight.services.InputHelper.stringInput;
@@ -22,60 +23,83 @@ import static com.pluralsight.services.InputHelper.stringInput;
 public class TransactionService {
     private static final String FILE_PATH = "src/main/resources/transactions.csv";
 
-    public void logTransaction(Transaction transaction) {
+    public void saveTransactionToFile(Transaction transaction) {
         try (var fileWriter = new FileWriter(FILE_PATH, true)) {
             fileWriter.write(transaction.logTransationString().toUpperCase());
 
             System.out.println("Saved: " + transaction.logTransationString().toUpperCase().trim());
-            clearScreen.cleanLogScreen();
+            screenUtils.pauseAndClearScreen();
         } catch (Exception e) {
             System.out.println("Error while trying to log transaction to file");
         }
     }
 
     public List<Transaction> getTransactions() {
-        var transactions = new ArrayList<Transaction>();
-        try (var bufferedReader = new BufferedReader(new FileReader(FILE_PATH))) {
+        List<Transaction> transactions = new ArrayList<>();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
-            while ((line = bufferedReader.readLine()) != null) {
-                var split = line.split("\\|");
-                transactions.add(new Transaction(split[2], split[3], split[4], new BigDecimal(split[5]), LocalTime.parse(split[1]), LocalDate.parse(split[0])));
+            while ((line = reader.readLine()) != null) {
+                try {
+                    String[] split = line.split("\\|");
+                    if (split.length != 6) {
+                        System.out.println("Skipping malformed line: " + line);
+                        continue;
+                    }
+
+                    var date = LocalDate.parse(split[0]);
+                    var time = LocalTime.parse(split[1]);
+                    var description = split[2];
+                    var vendor = split[3];
+                    var type = split[4];
+                    var amount = new BigDecimal(split[5]);
+
+                    transactions.add(new Transaction(description, vendor, type, amount, time, date));
+                } catch (Exception ex) {
+                    System.out.println("Error parsing line, skipping: " + line);
+                }
             }
-            transactions.sort(Comparator.comparing(Transaction::getTransactionDate).thenComparing(Transaction::getTransactionTime).reversed());
+
+            transactions.sort(Comparator
+                    .comparing(Transaction::getTransactionDate)
+                    .thenComparing(Transaction::getTransactionTime)
+                    .reversed()
+            );
         } catch (Exception e) {
-            System.out.println("Error while trying to read transactions from file");
+            System.out.println("Error while trying to read transactions from file: " + e.getMessage());
         }
         return transactions;
     }
 
-    public void printTransactions(String option) {
-        if (option.equals("A")) System.out.println("******************* All Transactions Screen *******************");
-        if (option.equals("D")) System.out.println("******************* Deposit Screen *******************");
-        if (option.equals("P")) System.out.println("******************* Payment Screen *******************");
+    public void displayTransactionsByType(String option) {
+        if (option.equals(TransactionType.ALL.getShortName())) System.out.println("******************* All Transactions Screen *******************");
+        if (option.equals(TransactionType.DEPOSIT.getShortName())) System.out.println("******************* Deposit Screen *******************");
+        if (option.equals(TransactionType.PAYMENT.getShortName())) System.out.println("******************* Payment Screen *******************");
+
         getTransactions().forEach(transaction -> {
-            if (option.equals("P") && transaction.getTransactionType().equals("P")) System.out.println(transaction);
-            if (option.equals("D") && transaction.getTransactionType().equals("D")) System.out.println(transaction);
-            if (option.equals("A")) System.out.println(transaction);
+            if (option.equals(TransactionType.PAYMENT.getShortName()) && transaction.getTransactionType().equals(TransactionType.PAYMENT.getShortName())) System.out.println(transaction);
+            if (option.equals(TransactionType.DEPOSIT.getShortName()) && transaction.getTransactionType().equals(TransactionType.DEPOSIT.getShortName())) System.out.println(transaction);
+            if (option.equals(TransactionType.ALL.getShortName())) System.out.println(transaction);
         });
-        clearScreen.cleanLogScreen();
+        screenUtils.pauseAndClearScreen();
     }
 
-    public void requestTransactionInformation(String option) {
-        if (option.equals("P")) System.out.println("******************* Payment Screen *******************");
+    public void createTransactionFromInput(String option) {
+        if (option.equals(TransactionType.PAYMENT.getShortName())) System.out.println("******************* Payment Screen *******************");
         else System.out.println("******************* Deposit Screen *******************");
 
         var description = stringInput("Enter Description: ");
         var vendor = stringInput("Enter Vendor: ");
         var amount = bigDecimalInput("Enter Amount: ", option);
         scanner.nextLine();
-        var date = generateDate();
-        var time = generateTime();
+        var date = promptForTransactionTime();
+        var time = promptForTransactionDate();
 
-        logTransaction(new Transaction(description, vendor, option, amount, time, date));
-        clearScreen.cleanPreviousScreen();
+        saveTransactionToFile(new Transaction(description, vendor, option, amount, time, date));
+        screenUtils.clearConsole();
     }
 
-    private LocalTime generateTime() {
+    private LocalTime promptForTransactionDate() {
         while (true) {
             try {
                 if (stringInput("Auto Time? (Y/N): ").equalsIgnoreCase("Y"))
@@ -89,7 +113,7 @@ public class TransactionService {
         }
     }
 
-    private LocalDate generateDate() {
+    private LocalDate promptForTransactionTime() {
         while (true) {
             try {
                 if (stringInput("Auto Date? (Y/N): ").equalsIgnoreCase("Y"))
