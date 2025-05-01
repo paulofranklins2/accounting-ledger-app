@@ -27,4 +27,23 @@ public class Transaction {
         this.transactionTime = transactionTime;
         this.transactionDate = transactionDate;
     }
+
+    @Override
+    public String toString() {
+        return this.getTransactionDate() + "|" +
+                this.getTransactionTime() + "|" +
+                this.getDescription() + "|" +
+                this.getVendor() + "|" +
+                this.getTransactionType() + "|" +
+                this.getAmount();
+    }
+
+    public String logTransationString() {
+        return this.getTransactionDate() + "|" +
+                this.getTransactionTime() + "|" +
+                this.getDescription() + "|" +
+                this.getVendor() + "|" +
+                this.getTransactionType() + "|" +
+                this.getAmount() + "\n";
+    }
 }
