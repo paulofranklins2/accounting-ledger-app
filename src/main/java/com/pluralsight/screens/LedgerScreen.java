@@ -4,7 +4,7 @@ import static com.pluralsight.app.AppContext.*;
 
 public class LedgerScreen {
 
-    private String showLedgerScreen() {
+    private String promptLedgerMenuOption() {
         System.out.println("******************* Ledger Screen *******************");
         System.out.println("[A] All - Display all entries");
         System.out.println("[D] Deposits - Display only deposit entries");
@@ -16,18 +16,18 @@ public class LedgerScreen {
             System.out.print("Select an option: ");
             return scanner.nextLine().trim().toUpperCase();
         } finally {
-            clearScreen.cleanPreviousScreen();
+            screenUtils.clearConsole();
         }
     }
 
-    public void ledgerMenuLogic() {
+    public void handleLedgerMenu() {
         while (true) {
-            var option = showLedgerScreen();
+            var option = promptLedgerMenuOption();
             switch (option) {
-                case "A", "D", "P" -> transactionService.printTransactions(option);
-                case "R" -> reportScreen.reportMenuLogic();
+                case "A", "D", "P" -> transactionService.displayTransactionsByType(option);
+                case "R" -> reportScreen.handleReportMenu();
                 case "H" -> {
-                    homeScreen.mainMenuLogic();
+                    homeScreen.handleMainMenu();
                     return;
                 }
                 default -> System.out.println("Select an option");

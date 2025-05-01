@@ -9,8 +9,8 @@ import static com.pluralsight.services.InputHelper.stringInput;
 
 public class HomeScreen {
 
-    private String showMainMenu() {
-        clearScreen.cleanPreviousScreen();
+    private String promptMainMenuOption() {
+        screenUtils.clearConsole();
         System.out.println("******************* Main Screen *******************");
         System.out.println("[D] Add Deposit");
         System.out.println("[P] Make Payment");
@@ -20,16 +20,16 @@ public class HomeScreen {
         try {
             return stringInput("Select an option: ").trim().toUpperCase();
         } finally {
-            clearScreen.cleanPreviousScreen();
+            screenUtils.clearConsole();
         }
     }
 
-    public void mainMenuLogic() {
+    public void handleMainMenu() {
         while (true) {
-            var option = new HomeScreen().showMainMenu();
+            var option = promptMainMenuOption();
             switch (option) {
-                case "D", "P" -> transactionService.requestTransactionInformation(option);
-                case "L" -> ledgerScreen.ledgerMenuLogic();
+                case "D", "P" -> transactionService.createTransactionFromInput(option);
+                case "L" -> ledgerScreen.handleLedgerMenu();
                 case "X" -> {
                     System.out.println("Thank you for using accounting ledger app");
                     System.exit(0);
@@ -42,18 +42,18 @@ public class HomeScreen {
     public void start() {
         while (true) {
             try {
-                clearScreen.cleanPreviousScreen();
+                screenUtils.clearConsole();
                 System.out.println("[1] CLI");
                 System.out.println("[2] UI **Working In Progress**");
                 System.out.println("[0] Exit");
                 var option = stringInput("Choose option: ").trim();
                 switch (option) {
-                    case "1" -> mainMenuLogic();
+                    case "1" -> handleMainMenu();
                     case "2" -> SwingUtilities.invokeLater(AccountingLedgerGUI::new);
                     case "0" -> System.exit(0);
                 }
             } catch (Exception e) {
-                throw new RuntimeException(e);
+                System.out.println("Invalid option" + e.getMessage());
             }
         }
     }

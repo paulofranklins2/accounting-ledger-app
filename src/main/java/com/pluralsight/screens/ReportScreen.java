@@ -1,7 +1,5 @@
 package com.pluralsight.screens;
 
-import com.pluralsight.models.Transaction;
-
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -10,7 +8,7 @@ import static com.pluralsight.services.InputHelper.stringInput;
 
 public class ReportScreen {
 
-    private String showReportMenu() {
+    private String promptReportMenuOption() {
         System.out.println("******************* Report Screen *******************");
         System.out.println("[1] Month To Date");
         System.out.println("[2] Previous Month");
@@ -24,13 +22,13 @@ public class ReportScreen {
         try {
             return stringInput("Select a report option: ").trim().toUpperCase();
         } finally {
-            clearScreen.cleanPreviousScreen();
+            screenUtils.clearConsole();
         }
     }
 
-    public void reportMenuLogic() {
+    public void handleReportMenu() {
         while (true) {
-            var option = showReportMenu();
+            var option = promptReportMenuOption();
             switch (option) {
                 case "1" -> {
                     System.out.println("******************* Month To Date Screen *******************");
@@ -50,14 +48,14 @@ public class ReportScreen {
                 }
                 case "5" -> {
                     System.out.println("******************* Search by Vendor Screen ******************");
-                    searchByVendor(stringInput("Enter vendor name: "));
+                    handleVendorSearch(stringInput("Enter vendor name: "));
                 }
                 case "6" -> {
                     System.out.println("******************* Custom Search Screen ******************");
-                    customSearch();
+                    handleCustomSearch();
                 }
-                case "0" -> ledgerScreen.ledgerMenuLogic();
-                case "H" -> homeScreen.mainMenuLogic();
+                case "0" -> ledgerScreen.handleLedgerMenu();
+                case "H" -> homeScreen.handleMainMenu();
                 default -> System.out.println("Select a valid option");
             }
         }
@@ -66,38 +64,38 @@ public class ReportScreen {
     public void printMonthToDate() {
         var now = LocalDate.now();
         var firstDayOfMonth = now.withDayOfMonth(1);
-        printTransactionsBetween(firstDayOfMonth, now);
+        displayTransactionsInRange(firstDayOfMonth, now);
     }
 
     public void printPreviousMonth() {
         var today = LocalDate.now();
         var first = today.minusMonths(1).withDayOfMonth(1);
         var last = today.withDayOfMonth(1).minusDays(1);
-        printTransactionsBetween(first, last);
+        displayTransactionsInRange(first, last);
     }
 
     public void printYearToDate() {
         var first = LocalDate.of(LocalDate.now().getYear(), 1, 1);
         var today = LocalDate.now();
-        printTransactionsBetween(first, today);
+        displayTransactionsInRange(first, today);
     }
 
     public void printPreviousYear() {
         var lastYear = LocalDate.now().getYear() - 1;
         var first = LocalDate.of(lastYear, 1, 1);
         var last = LocalDate.of(lastYear, 12, 31);
-        printTransactionsBetween(first, last);
+        displayTransactionsInRange(first, last);
     }
 
-    public void searchByVendor(String vendor) {
+    public void handleVendorSearch(String vendor) {
         for (var transaction : transactionService.getTransactions()) {
             if (transaction.getVendor().equalsIgnoreCase(vendor))
                 System.out.println(transaction);
         }
-        clearScreen.cleanLogScreen();
+        screenUtils.pauseAndClearScreen();
     }
 
-    public void customSearch() {
+    public void handleCustomSearch() {
         var startInput = stringInput("Enter start date (yyyy-mm-dd) or leave blank: ").trim();
         var endInput = stringInput("Enter end date (yyyy-mm-dd) or leave blank: ").trim();
         var description = stringInput("Enter description or leave blank: ").trim();
@@ -138,17 +136,17 @@ public class ReportScreen {
                 System.out.println(transaction);
             }
         }
-        clearScreen.cleanLogScreen();
+        screenUtils.pauseAndClearScreen();
     }
 
-    private void printTransactionsBetween(LocalDate start, LocalDate end) {
+    private void displayTransactionsInRange(LocalDate start, LocalDate end) {
         for (var transaction : transactionService.getTransactions()) {
             var date = transaction.getTransactionDate();
             if (!date.isBefore(start) && !date.isAfter(end)) {
                 System.out.println(transaction);
             }
         }
-        clearScreen.cleanLogScreen();
+        screenUtils.pauseAndClearScreen();
     }
 
 }
