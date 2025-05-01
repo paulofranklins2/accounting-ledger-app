@@ -1,6 +1,6 @@
 package com.pluralsight.services;
 
-import com.pluralsight.TransactionType;
+import com.pluralsight.models.TransactionType;
 import com.pluralsight.models.Transaction;
 
 import java.io.BufferedReader;
@@ -72,20 +72,20 @@ public class TransactionService {
     }
 
     public void displayTransactionsByType(String option) {
-        if (option.equals(TransactionType.ALL.getShortName())) System.out.println("******************* All Transactions Screen *******************");
-        if (option.equals(TransactionType.DEPOSIT.getShortName())) System.out.println("******************* Deposit Screen *******************");
-        if (option.equals(TransactionType.PAYMENT.getShortName())) System.out.println("******************* Payment Screen *******************");
+        if (option.equals(TransactionType.ALL.getValue())) System.out.println("******************* All Transactions Screen *******************");
+        if (option.equals(TransactionType.DEPOSIT.getValue())) System.out.println("******************* Deposit Screen *******************");
+        if (option.equals(TransactionType.PAYMENT.getValue())) System.out.println("******************* Payment Screen *******************");
 
         getTransactions().forEach(transaction -> {
-            if (option.equals(TransactionType.PAYMENT.getShortName()) && transaction.getTransactionType().equals(TransactionType.PAYMENT.getShortName())) System.out.println(transaction);
-            if (option.equals(TransactionType.DEPOSIT.getShortName()) && transaction.getTransactionType().equals(TransactionType.DEPOSIT.getShortName())) System.out.println(transaction);
-            if (option.equals(TransactionType.ALL.getShortName())) System.out.println(transaction);
+            if (option.equals(TransactionType.PAYMENT.getValue()) && transaction.getTransactionType().equals(TransactionType.PAYMENT.getValue())) System.out.println(transaction);
+            if (option.equals(TransactionType.DEPOSIT.getValue()) && transaction.getTransactionType().equals(TransactionType.DEPOSIT.getValue())) System.out.println(transaction);
+            if (option.equals(TransactionType.ALL.getValue())) System.out.println(transaction);
         });
         screenUtils.pauseAndClearScreen();
     }
 
     public void createTransactionFromInput(String option) {
-        if (option.equals(TransactionType.PAYMENT.getShortName())) System.out.println("******************* Payment Screen *******************");
+        if (option.equals(TransactionType.PAYMENT.getValue())) System.out.println("******************* Payment Screen *******************");
         else System.out.println("******************* Deposit Screen *******************");
 
         var description = stringInput("Enter Description: ");
