@@ -1,7 +1,10 @@
 package com.pluralsight.services;
 
 
+import com.pluralsight.models.TransactionType;
+
 import java.math.BigDecimal;
+import java.util.InputMismatchException;
 
 import static com.pluralsight.app.AppContext.scanner;
 
@@ -22,14 +25,11 @@ public class InputHelper {
         while (true) {
             System.out.print(prompt);
             try {
-                var input = scanner.nextLine().trim();
-                var value = new BigDecimal(input);
-
-                if (transactionType.equalsIgnoreCase("P"))
-                    return value.abs().negate();
-
-                return value.abs();
-            } catch (NumberFormatException e) {
+                var amount = scanner.nextBigDecimal();
+                if (transactionType.equalsIgnoreCase(TransactionType.PAYMENT.getValue())) return amount.negate();
+                else return amount.abs();
+            } catch (InputMismatchException e) {
+                scanner.nextLine();
                 System.out.println("Invalid amount. Please enter a valid number.");
             }
         }

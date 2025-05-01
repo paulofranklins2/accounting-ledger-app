@@ -1,4 +1,4 @@
-package com.pluralsight;
+package com.pluralsight.models;
 
 import lombok.Getter;
 
@@ -9,9 +9,9 @@ public enum TransactionType {
     WITHDRAWAL("W"),
     ALL("A");
 
-    private final String shortName;
+    private final String value;
 
     TransactionType(String description) {
-        this.shortName = description;
+        this.value = description;
     }
 }
