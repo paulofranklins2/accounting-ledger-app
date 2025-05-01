@@ -9,23 +9,89 @@ The Accounting Ledger CLI app is designed to help users easily add deposits, mak
 
 ### 🖼️ Screenshots
 
-#### 1. **Home Screen**
-![Home Screen](images/screenshots/img.png)
+#### 1. **CLI Main Screen**
+
+```text
+******************* Main Screen *******************
+[D] Add Deposit
+[P] Make Payment
+[L] Ledger
+[X] Exit
+
+Select an option:
+```
 
 #### 2. **Ledger Screen**
-![Add Deposit](images/screenshots/img_1.png)
+
+```text
+******************* Ledger Screen *******************
+[A] All - Display all entries
+[D] Deposits - Display only deposit entries
+[P] Payments - Display only payment entries
+[R] Reports - View reports and search
+[H] Home - Return to home screen
+
+Select an option:
+```
 
 #### 4. **Reports Section**
-![Reports](images/screenshots/img_5.png)
 
-#### 3. **Ledger All Transactions View**
-![Ledger View](images/screenshots/img_2.png)
+```text
+******************* Report Screen *******************
+[1] Month To Date
+[2] Previous Month
+[3] Year To Date
+[4] Previous Year
+[5] Search by Vendor
+[6] Custom Search
+[0] Back - Go back to the report page
+[H] Home - Go back to the home page
 
-#### 3. **Ledger All Deposits View**
-![Ledger View](images/screenshots/img_3.png)
+Select a report option:
+```
 
-#### 3. **Ledger All Payments View**
-![Ledger View](images/screenshots/img_4.png)
+#### 3. **Sample all Transactions Screen**
+
+```text
+2025-04-27|08:50:45|GYM|FITNESS|D|35.00
+2025-03-11|22:40:02|VENMO|TRANSFER|D|50.00
+2024-06-22|17:22:41|UBER|APP|P|-15.20
+2024-01-02|11:22:55|SHELL|GAS|P|-47.30
+2024-01-02|10:22:55|SHELL|GAS|P|-47.30
+2023-12-05|18:06:22|SPOTIFY|ONLINE|P|-9.99
+2023-01-14|09:45:13|COFFEESHOP|DOWNTOWN|D|4.75
+2022-11-08|12:10:59|AMAZON|ONLINE|D|89.99
+2022-07-30|07:33:10|TARGET|RETAIL|D|65.75
+2021-05-19|13:14:37|WALMART|GROCERIES|P|-112.45
+2020-08-30|20:34:05|NETFLIX|SUBSCRIPTION|P|-13.99
+
+Press ENTER to continue: 
+```
+
+#### 3. **Sample All Deposits View**
+
+```text
+2025-04-27|08:50:45|GYM|FITNESS|D|35.00
+2025-03-11|22:40:02|VENMO|TRANSFER|D|50.00
+2023-01-14|09:45:13|COFFEESHOP|DOWNTOWN|D|4.75
+2022-11-08|12:10:59|AMAZON|ONLINE|D|89.99
+2022-07-30|07:33:10|TARGET|RETAIL|D|65.75
+
+Press ENTER to continue:
+```
+
+#### 3. **Sample All Payments View**
+
+```text
+2024-06-22|17:22:41|UBER|APP|P|-15.20
+2024-01-02|11:22:55|SHELL|GAS|P|-47.30
+2024-01-02|10:22:55|SHELL|GAS|P|-47.30
+2023-12-05|18:06:22|SPOTIFY|ONLINE|P|-9.99
+2021-05-19|13:14:37|WALMART|GROCERIES|P|-112.45
+2020-08-30|20:34:05|NETFLIX|SUBSCRIPTION|P|-13.99
+
+Press ENTER to continue:
+```
 
 ## 📊 Project Status
 
