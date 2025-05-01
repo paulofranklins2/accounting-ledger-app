@@ -19,13 +19,13 @@ public class Transaction {
     private LocalDate transactionDate;
     private LocalTime transactionTime;
 
-    public Transaction(String description, String vendor, String transactionType, BigDecimal amount, LocalTime transactionTime, LocalDate transactionDate) {
+    public Transaction(LocalDate transactionDate, LocalTime transactionTime, String description, String vendor, String transactionType, BigDecimal amount) {
+        this.transactionTime = transactionTime;
+        this.transactionDate = transactionDate;
         this.description = description;
         this.vendor = vendor;
         this.transactionType = transactionType;
         this.amount = amount;
-        this.transactionTime = transactionTime;
-        this.transactionDate = transactionDate;
     }
 
     @Override
@@ -38,7 +38,7 @@ public class Transaction {
                 this.getAmount();
     }
 
-    public String logTransationString() {
+    public String saveTransactionToString() {
         return this.getTransactionDate() + "|" +
                 this.getTransactionTime() + "|" +
                 this.getDescription() + "|" +
