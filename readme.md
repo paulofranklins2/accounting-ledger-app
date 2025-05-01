@@ -46,6 +46,23 @@ The Accounting Ledger CLI app is designed to help users easily add deposits, mak
 - **Optional: Custom Search**  
   For those who want more control, there's also a custom search where users can filter by date range, vendor, description, and amount.
 
+## 💡 Interesting Snippet
+
+I find this piece of code interesting because, since I need so many inputs from the users, it avoids having to manually handle each case. With this method, I can simply call it wherever needed and it takes care of the validation and user prompt automatically.
+
+```java
+    public static String stringInput(String input) {
+        while (true) {
+            try {
+                System.out.print(input);
+                return scanner.nextLine();
+            } catch (Exception e) {
+                System.out.println("Invalid input. Please try again.");
+            }
+        }
+    }
+```
+
 ## 🛠️ Technologies Used
 
 - Java
