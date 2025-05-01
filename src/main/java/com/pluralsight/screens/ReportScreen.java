@@ -30,20 +30,15 @@ public class ReportScreen {
 
     public void reportMenuLogic() {
         while (true) {
-            String option = showReportMenu();
+            var option = showReportMenu();
             switch (option) {
                 case "1" -> printMonthToDate();
                 case "2" -> printPreviousMonth();
                 case "3" -> printYearToDate();
                 case "4" -> printPreviousYear();
                 case "5" -> searchByVendor(stringInput("Enter vendor name: "));
-                case "6" -> {
-                    customSearch();
-                }
-                case "0" -> {
-                    ledgerScreen.ledgerMenuLogic();
-                    return;
-                }
+                case "6" -> customSearch();
+                case "0" -> ledgerScreen.ledgerMenuLogic();
                 case "H" -> {
                     homeScreen.mainMenuLogic();
                     return;
@@ -93,11 +88,11 @@ public class ReportScreen {
     }
 
     public void customSearch() {
-        String startInput = stringInput("Enter start date (yyyy-mm-dd) or leave blank: ").trim();
-        String endInput = stringInput("Enter end date (yyyy-mm-dd) or leave blank: ").trim();
-        String description = stringInput("Enter description or leave blank: ").trim();
-        String vendor = stringInput("Enter vendor or leave blank: ").trim();
-        String amountInput = stringInput("Enter amount or leave blank: ").trim();
+        var startInput = stringInput("Enter start date (yyyy-mm-dd) or leave blank: ").trim();
+        var endInput = stringInput("Enter end date (yyyy-mm-dd) or leave blank: ").trim();
+        var description = stringInput("Enter description or leave blank: ").trim();
+        var vendor = stringInput("Enter vendor or leave blank: ").trim();
+        var amountInput = stringInput("Enter amount or leave blank: ").trim();
 
         LocalDate startDate = null;
         LocalDate endDate = null;
@@ -119,12 +114,13 @@ public class ReportScreen {
         }
 
         for (var transaction : transactionService.getTransactions()) {
-            LocalDate date = transaction.getTransactionDate();
-            boolean matches = true;
+            var date = transaction.getTransactionDate();
+            var matches = true;
 
             if (startDate != null && date.isBefore(startDate)) matches = false;
             if (endDate != null && date.isAfter(endDate)) matches = false;
-            if (!description.isEmpty() && !transaction.getDescription().toLowerCase().contains(description.toLowerCase())) matches = false;
+            if (!description.isEmpty() && !transaction.getDescription().toLowerCase().contains(description.toLowerCase()))
+                matches = false;
             if (!vendor.isEmpty() && !transaction.getVendor().equalsIgnoreCase(vendor)) matches = false;
             if (amount != null && transaction.getAmount().compareTo(BigDecimal.valueOf(amount)) != 0) matches = false;
 
@@ -139,7 +135,7 @@ public class ReportScreen {
 
     private void printTransactionsBetween(LocalDate start, LocalDate end) {
         for (var transaction : transactionService.getTransactions()) {
-            LocalDate date = transaction.getTransactionDate();
+            var date = transaction.getTransactionDate();
             if (!date.isBefore(start) && !date.isAfter(end)) {
                 printTransaction(transaction);
             }
@@ -148,12 +144,6 @@ public class ReportScreen {
     }
 
     private void printTransaction(Transaction transaction) {
-        System.out.println(
-                transaction.getTransactionDate() + "|" +
-                        transaction.getTransactionTime() + "|" +
-                        transaction.getDescription() + "|" +
-                        transaction.getVendor() + "|" +
-                        transaction.getTransactionType() + "|" +
-                        transaction.getAmount());
+        System.out.println(transaction.getTransactionDate() + "|" + transaction.getTransactionTime() + "|" + transaction.getDescription() + "|" + transaction.getVendor() + "|" + transaction.getTransactionType() + "|" + transaction.getAmount());
     }
 }
