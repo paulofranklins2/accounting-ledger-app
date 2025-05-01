@@ -20,6 +20,18 @@ The Accounting Ledger CLI app is designed to help users easily add deposits, mak
 
 Select an option:
 ```
+### ** Make Deposit or Payment Screen*
+```text
+Requesting transaction information
+Enter description: Bug Bounty
+Enter vendor: Google
+Enter amount: 20000
+Auto Date? (Y/N): y
+Auto Time? (Y/N): y
+Saved: 2025-05-01|09:10:07|BUG BOUNTY|GOOGLE|D|20000.0
+
+Press ENTER to continue: 
+```
 
 #### 2. **Ledger Screen**
 
@@ -53,6 +65,7 @@ Select a report option:
 #### 3. **Sample all Transactions Screen**
 
 ```text
+******************* All Transactions Screen *******************
 2025-04-27|08:50:45|GYM|FITNESS|D|35.00
 2025-03-11|22:40:02|VENMO|TRANSFER|D|50.00
 2024-06-22|17:22:41|UBER|APP|P|-15.20
@@ -71,6 +84,7 @@ Press ENTER to continue:
 #### 3. **Sample All Deposits View**
 
 ```text
+******************* Deposit Screen *******************
 2025-04-27|08:50:45|GYM|FITNESS|D|35.00
 2025-03-11|22:40:02|VENMO|TRANSFER|D|50.00
 2023-01-14|09:45:13|COFFEESHOP|DOWNTOWN|D|4.75
@@ -83,6 +97,7 @@ Press ENTER to continue:
 #### 3. **Sample All Payments View**
 
 ```text
+******************* Payment Screen *******************
 2024-06-22|17:22:41|UBER|APP|P|-15.20
 2024-01-02|11:22:55|SHELL|GAS|P|-47.30
 2024-01-02|10:22:55|SHELL|GAS|P|-47.30
