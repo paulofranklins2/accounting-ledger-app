@@ -42,8 +42,9 @@ public class HomeScreen {
     public void start() {
         while (true) {
             try {
+                clearScreen.cleanPreviousScreen();
                 System.out.println("[1] CLI");
-                System.out.println("[2] UI");
+                System.out.println("[2] UI **Working In Progress**");
                 System.out.println("[0] Exit");
                 var option = stringInput("Choose option: ").trim();
                 switch (option) {

@@ -23,9 +23,8 @@ public class InputHelper {
             System.out.print(input);
 
             try {
-                if (option.equalsIgnoreCase("P")) {
+                if (option.equalsIgnoreCase("P"))
                     return BigDecimal.valueOf(scanner.nextDouble()).negate();
-                }
                 return BigDecimal.valueOf(Math.abs(scanner.nextDouble()));
             } catch (Exception e) {
                 scanner.nextLine();
