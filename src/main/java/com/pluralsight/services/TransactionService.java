@@ -23,17 +23,11 @@ public class TransactionService {
     private static final String FILE_PATH = "src/main/resources/transactions.csv";
 
     public void logTransaction(Transaction transaction) {
-        var stringBuilder = new StringBuilder();
-        stringBuilder
-                .append(transaction.getTransactionDate()).append("|")
-                .append(transaction.getTransactionTime()).append("|")
-                .append(transaction.getDescription()).append("|")
-                .append(transaction.getVendor()).append("|")
-                .append(transaction.getTransactionType()).append("|")
-                .append(transaction.getAmount()).append("\n");
-
         try (var fileWriter = new FileWriter(FILE_PATH, true)) {
-            fileWriter.write(stringBuilder.toString().toUpperCase());
+            fileWriter.write(transaction.logTransationString().toUpperCase());
+
+            System.out.println("Saved: " + transaction.logTransationString().toUpperCase().trim());
+            clearScreen.cleanLogScreen();
         } catch (Exception e) {
             System.out.println("Error while trying to log transaction to file");
         }
@@ -55,27 +49,24 @@ public class TransactionService {
     }
 
     public void printTransactions(String option) {
+        if (option.equals("A")) System.out.println("******************* All Transactions Screen *******************");
+        if (option.equals("D")) System.out.println("******************* Deposit Screen *******************");
+        if (option.equals("P")) System.out.println("******************* Payment Screen *******************");
         getTransactions().forEach(transaction -> {
-            var textFormat = (
-                    transaction.getTransactionDate() + "|" +
-                            transaction.getTransactionTime() + "|" +
-                            transaction.getDescription() + "|" +
-                            transaction.getVendor() + "|" +
-                            transaction.getTransactionType() + "|" +
-                            transaction.getAmount() + "\n").toUpperCase().trim();
-
-            if (option.equals("P") && transaction.getTransactionType().equals("P")) System.out.println(textFormat);
-            if (option.equals("D") && transaction.getTransactionType().equals("D")) System.out.println(textFormat);
-            if (option.equals("A")) System.out.println(textFormat);
+            if (option.equals("P") && transaction.getTransactionType().equals("P")) System.out.println(transaction);
+            if (option.equals("D") && transaction.getTransactionType().equals("D")) System.out.println(transaction);
+            if (option.equals("A")) System.out.println(transaction);
         });
         clearScreen.cleanLogScreen();
     }
 
     public void requestTransactionInformation(String option) {
-        System.out.println("Requesting transaction information");
-        var description = stringInput("Enter description: ");
-        var vendor = stringInput("Enter vendor: ");
-        var amount = bigDecimalInput("Enter amount: ", option);
+        if (option.equals("P")) System.out.println("******************* Payment Screen *******************");
+        else System.out.println("******************* Deposit Screen *******************");
+
+        var description = stringInput("Enter Description: ");
+        var vendor = stringInput("Enter Vendor: ");
+        var amount = bigDecimalInput("Enter Amount: ", option);
         scanner.nextLine();
         var date = generateDate();
         var time = generateTime();
