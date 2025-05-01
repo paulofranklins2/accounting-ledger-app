@@ -446,7 +446,4 @@ public class AccountingLedgerGUI extends JFrame {
             dialog.setVisible(true);
         }
     }
-
-    public static void main(String[] args) {
-    }
 }

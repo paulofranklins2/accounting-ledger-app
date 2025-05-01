@@ -98,11 +98,11 @@ Press ENTER to continue:
 ```mermaid
 flowchart TD
 %% Define style for nodes
-  classDef homeScreen fill:#f9f,stroke:#333,stroke-width:2px;
-  classDef ledgerScreen fill:#ccf,stroke:#333,stroke-width:2px;
-  classDef reportScreen fill:#cfc,stroke:#333,stroke-width:2px;
-  classDef actionScreen fill:#ffc,stroke:#333,stroke-width:2px;
-  classDef exitScreen fill:#f88,stroke:#333,stroke-width:2px;
+  classDef homeScreen fill:#000,stroke:#333,stroke-width:2px;
+  classDef ledgerScreen fill:#000,stroke:#333,stroke-width:2px;
+  classDef reportScreen fill:#000,stroke:#333,stroke-width:2px;
+  classDef actionScreen fill:#325863,stroke:#333,stroke-width:2px;
+  classDef exitScreen fill:#FF0000,stroke:#333,stroke-width:2px;
 
 %% Home screen
   A[Home Screen] -->|D Add Deposit| B[Add Deposit Screen]
