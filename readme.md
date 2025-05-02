@@ -183,7 +183,7 @@ class E exitScreen;
 
 ## 💡 Interesting Snippet
 
-I find this piece of code interesting because, since I need so many inputs from the users, it avoids having to manually handle each case. With this method, I can simply call it wherever needed and it takes care of the validation and user prompt automatically.
+I find this piece of code interesting because, since I need so many inputs from the users, it avoids having to manually handle each case. With this method, I can simply call it wherever needed, and it takes care of the validation and user prompt automatically.
 
 ```java
     public static String stringInput(String input) {
