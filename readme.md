@@ -111,49 +111,45 @@ Press ENTER to continue:
 ## 🖼️ Screen Flow Diagram
 
 ```mermaid
----
-config:
-  theme: neo-dark
-  look: handDrawn
-  layout: elk
----
-flowchart TD
-  A["Main Menu"] -- D Add Deposit --> B["Add Deposit"]
-  A -- P Make Payment --> C["Make Payment"]
-  A -- L Ledger --> D["Ledger"]
-  A -- X Exit --> E["Exit Application"]
-  D -- A All --> F["Display all entries"]
-  D -- D Deposits --> G["Display only deposit entries"]
-  D -- P Payments --> H["Display only payment entries"]
-  D -- R Reports --> I["Reports"]
-  D -- H Home --> A
-  I -- 1 Month To Date --> J["Month To Date"]
-  I -- 2 Previous Month --> K["Previous Month"]
-  I -- 3 Year To Date --> L["Year To Date"]
-  I -- 4 Previous Year --> M["Previous Year"]
-  I -- 5 Search by Vendor --> N["Search by Vendor"]
-  I -- 6 Custom Search --> O["Custom Search"]
-  I -- 0 Back --> D
-  I -- H Home --> A
-  A:::homeScreen
-  B:::actionScreen
-  C:::actionScreen
-  D:::actionScreen
-  E:::homeScreen
-  E:::exitScreen
-  F:::actionScreen
-  G:::actionScreen
-  H:::actionScreen
-  I:::actionScreen
-  J:::actionScreen
-  K:::actionScreen
-  L:::actionScreen
-  M:::actionScreen
-  N:::actionScreen
-  O:::actionScreen
-  classDef homeScreen fill:#6AA84F,stroke:#333,stroke-width:1px,color:#fff
-  classDef actionScreen fill:#3C78D8,stroke:#333,stroke-width:1px,color:#fff
-  classDef exitScreen fill:#E06666,stroke:#333,stroke-width:1px,color:#fff
+stateDiagram-v2
+  state "Main Menu" as A
+  state "Add Deposit" as B
+  state "Make Payment" as C
+  state "Ledger" as D
+  state "Exit Application" as E
+  A --> B: D Add Deposit
+  A --> C: P Make Payment
+  A --> D: L Ledger
+  A --> E: X Exit
+
+state D 
+state "Display all entries" as F
+state "Deposit entries" as G
+state "Payment entries" as H
+state "Reports" as I
+
+D --> F: A All
+D --> G: D Deposits
+D --> H: P Payments
+D --> I: R Reports
+D --> A : H Home
+
+state I
+state "Month To Date" as J
+state "Previous Month" as K
+state "Year To Date" as L
+state "Previous Year" as M
+state "Vendor Search" as N
+state "Custom Search" as O
+
+I --> J: 1
+I --> K: 2
+I --> L: 3
+I --> M: 4
+I --> N: 5
+I --> O: 6
+I --> D: 0 Back
+I --> A: H Home
 ```
 
 ## 📊 Project Status
