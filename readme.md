@@ -111,55 +111,56 @@ Press ENTER to continue:
 ## 🖼️ Screen Flow Diagram
 
 ```mermaid
-flowchart TD
-%% Define style for nodes
-  classDef homeScreen fill:#000,stroke:#333,stroke-width:2px;
-  classDef ledgerScreen fill:#000,stroke:#333,stroke-width:2px;
-  classDef reportScreen fill:#000,stroke:#333,stroke-width:2px;
-  classDef actionScreen fill:#325863,stroke:#333,stroke-width:2px;
-  classDef exitScreen fill:#FF0000,stroke:#333,stroke-width:2px;
+graph TD
+  A["Home Screen"] -- D Add Deposit --> B["Add Deposit Screen"]
+  A -- P Make Payment --> C["Make Payment Screen"]
+  A -- L Ledger --> D["Ledger View"]
+  A -- X Exit --> E["Exit Application"]
+  D -- A All Transactions --> F["End"]
+  D -- D Deposits --> G["Show Deposits"]
+  D -- P Payments --> H["Show Payments"]
+  D -- R Reports --> I["Reports Screen"]
+  D -- H Home --> A
+  I -- 1 Month To Date --> J["Month To Date Report"]
+  I -- 2 Previous Month --> K["Previous Month Report"]
+  I -- 3 Year To Date --> L["Year To Date Report"]
+  I -- 4 Previous Year --> M["Previous Year Report"]
+  I -- 5 Search by Vendor --> N["Search by Vendor"]
+  I -- 6 Custom Search --> O["Custom Search"]
+  I -- 0 Back --> D
+  B -- Press Enter to Continue --> A
+  C -- Press Enter to Continue --> A
+  F -- Press Enter to Continue --> D
+  G -- Press Enter to Continue --> D
+  H -- Press Enter to Continue --> D
+  J -- Press Enter to Continue --> I
+  K -- Press Enter to Continue --> I
+  L -- Press Enter to Continue --> I
+  M -- Press Enter to Continue --> I
+  N -- Press Enter to Continue --> I
+  O -- Press Enter to Continue --> I
+  E -- Application Exits --> F
+  A:::homeScreen
+  B:::actionScreen
+  C:::actionScreen
+  D:::ledgerScreen
+  E:::exitScreen
+  F:::actionScreen
+  G:::actionScreen
+  H:::actionScreen
+  I:::reportScreen
+  J:::actionScreen
+  K:::actionScreen
+  L:::actionScreen
+  M:::actionScreen
+  N:::actionScreen
+  O:::actionScreen
+  classDef homeScreen fill:#000,stroke:#333,stroke-width:2px
+  classDef ledgerScreen fill:#000,stroke:#333,stroke-width:2px
+  classDef reportScreen fill:#000,stroke:#333,stroke-width:2px
+  classDef actionScreen fill:#325863,stroke:#333,stroke-width:2px
+  classDef exitScreen fill:#FF0000,stroke:#333,stroke-width:2px
 
-%% Home screen
-  A[Home Screen] -->|D Add Deposit| B[Add Deposit Screen]
-A -->|P Make Payment| C[Make Payment Screen]
-A -->|L Ledger| D[Ledger View]
-A -->|X Exit| E[Exit Application]
-class A homeScreen;
-
-%% Ledger screen options
-D -->|A All Transactions| F[Show All Transactions]
-D -->|D Deposits| G[Show Deposits]
-D -->|P Payments| H[Show Payments]
-D -->|R Reports| I[Reports Screen]
-class D ledgerScreen;
-
-%% Report screen options
-I -->|1 Month To Date| J[Month To Date Report]
-I -->|2 Previous Month| K[Previous Month Report]
-I -->|3 Year To Date| L[Year To Date Report]
-I -->|4 Previous Year| M[Previous Year Report]
-I -->|5 Search by Vendor| N[Search by Vendor]
-I -->|6 Custom Search| O[Custom Search]
-I -->|0 Back| D
-class I reportScreen;
-
-%% Action screens (Add Deposit, Make Payment)
-B -->|Press Enter to Continue| A
-C -->|Press Enter to Continue| A
-F -->|Press Enter to Continue| D
-G -->|Press Enter to Continue| D
-H -->|Press Enter to Continue| D
-J -->|Press Enter to Continue| I
-K -->|Press Enter to Continue| I
-L -->|Press Enter to Continue| I
-M -->|Press Enter to Continue| I
-N -->|Press Enter to Continue| I
-O -->|Press Enter to Continue| I
-class B,C,F,G,H,J,K,L,M,N,O actionScreen;
-
-%% Exit screen
-E -->|Application Exits| F[End]
-class E exitScreen;
 ```
 
 ## 📊 Project Status
