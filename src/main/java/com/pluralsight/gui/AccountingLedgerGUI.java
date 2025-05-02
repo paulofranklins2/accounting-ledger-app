@@ -40,16 +40,16 @@ public class AccountingLedgerGUI extends JFrame {
     }
 
     private JPanel createHomePanel() {
-        JPanel panel = new JPanel(new BorderLayout(10, 10));
+        var panel = new JPanel(new BorderLayout(10, 10));
         panel.setBorder(new EmptyBorder(20, 20, 20, 20));
 
         // Title
-        JLabel titleLabel = new JLabel("Accounting Ledger", SwingConstants.CENTER);
+        var titleLabel = new JLabel("Accounting Ledger", SwingConstants.CENTER);
         titleLabel.setFont(new Font("Tahoma", Font.BOLD, 28));
         panel.add(titleLabel, BorderLayout.NORTH);
 
         // Buttons Panel
-        JPanel buttonPanel = new JPanel(new GridLayout(4, 1, 15, 15));
+        var buttonPanel = new JPanel(new GridLayout(4, 1, 15, 15));
         buttonPanel.setBorder(new EmptyBorder(50, 150, 50, 150));
 
         var depositButton = createStyledButton("Add Deposit");
@@ -218,7 +218,7 @@ public class AccountingLedgerGUI extends JFrame {
     }
 
     private void showTransactionsDialog(List<Transaction> transactions, String title) {
-        JDialog dialog = new JDialog(this, title, true);
+        var dialog = new JDialog(this, title, true);
         var textArea = new JTextArea(20, 60);
         textArea.setEditable(false);
         textArea.setFont(new Font("Monospaced", Font.PLAIN, 12));
