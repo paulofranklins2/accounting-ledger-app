@@ -201,7 +201,7 @@ public class AccountingLedgerGUI extends JFrame {
                         type,
                         new BigDecimal(amountField.getText())
                 );
-                transactionService.saveTransactionToFile(transaction);
+                transactionService.saveTransactionToFile(transaction, true);
                 dialog.dispose();
             } catch (Exception ex) {
                 JOptionPane.showMessageDialog(dialog, "Invalid input format");

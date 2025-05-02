@@ -23,12 +23,13 @@ import static com.pluralsight.services.InputHelper.stringInput;
 public class TransactionService {
     private static final String FILE_PATH = "src/main/resources/transactions.csv";
 
-    public void saveTransactionToFile(Transaction transaction) {
+    public void saveTransactionToFile(Transaction transaction, boolean isUi) {
         try (var fileWriter = new FileWriter(FILE_PATH, true)) {
             fileWriter.write(transaction.saveTransactionToString().toUpperCase());
 
             System.out.println("Saved: " + transaction.saveTransactionToString().toUpperCase().trim());
-            screenUtils.pauseAndClearScreen();
+            if (!isUi)
+                screenUtils.pauseAndClearScreen();
         } catch (Exception e) {
             System.out.println("Error while trying to log transaction to file");
         }
@@ -60,11 +61,7 @@ public class TransactionService {
                 }
             }
 
-            transactions.sort(Comparator
-                    .comparing(Transaction::getTransactionDate)
-                    .thenComparing(Transaction::getTransactionTime)
-                    .reversed()
-            );
+            transactions.sort(Comparator.comparing(Transaction::getTransactionDate).thenComparing(Transaction::getTransactionTime).reversed());
         } catch (Exception e) {
             System.out.println("Error while trying to read transactions from file: " + e.getMessage());
         }
@@ -94,7 +91,7 @@ public class TransactionService {
         var date = promptForTransactionTime();
         var time = promptForTransactionDate();
 
-        saveTransactionToFile(new Transaction(date, time, description, vendor, option, amount));
+        saveTransactionToFile(new Transaction(date, time, description, vendor, option, amount), false);
         screenUtils.clearConsole();
     }
 
