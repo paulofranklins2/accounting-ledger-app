@@ -121,35 +121,29 @@ stateDiagram-v2
   A --> C: P Make Payment
   A --> D: L Ledger
   A --> E: X Exit
-
-state D 
-state "Display all entries" as F
-state "Deposit entries" as G
-state "Payment entries" as H
-state "Reports" as I
-
-D --> F: A All
-D --> G: D Deposits
-D --> H: P Payments
-D --> I: R Reports
-D --> A : H Home
-
-state I
-state "Month To Date" as J
-state "Previous Month" as K
-state "Year To Date" as L
-state "Previous Year" as M
-state "Vendor Search" as N
-state "Custom Search" as O
-
-I --> J: 1
-I --> K: 2
-I --> L: 3
-I --> M: 4
-I --> N: 5
-I --> O: 6
-I --> D: 0 Back
-I --> A: H Home
+  state "Display all entries" as F
+  state "Deposit entries" as G
+  state "Payment entries" as H
+  state "Reports" as I
+  D --> F: A All
+  D --> G: D Deposits
+  D --> H: P Payments
+  D --> I: R Reports
+  D --> A: H Home
+  state "Month To Date" as J
+  state "Previous Month" as K
+  state "Year To Date" as L
+  state "Previous Year" as M
+  state "Vendor Search" as N
+  state "Custom Search" as O
+  I --> J: 1
+  I --> K: 2
+  I --> L: 3
+  I --> M: 4
+  I --> N: 5
+  I --> O: 6
+  I --> D: 0 Back
+  I --> A: H Home
 ```
 
 ## 📊 Project Status
