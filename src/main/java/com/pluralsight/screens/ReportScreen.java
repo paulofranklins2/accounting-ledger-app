@@ -16,7 +16,7 @@ public class ReportScreen {
         System.out.println("[4] Previous Year");
         System.out.println("[5] Search by Vendor");
         System.out.println("[6] Custom Search");
-        System.out.println("[0] Back - Go back to the report page");
+        System.out.println("[0] Back - Go back to the ledge page");
         System.out.println("[H] Home - Go back to the home page");
 
         try {

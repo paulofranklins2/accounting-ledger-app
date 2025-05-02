@@ -111,56 +111,49 @@ Press ENTER to continue:
 ## 🖼️ Screen Flow Diagram
 
 ```mermaid
-graph TD
-  A["Home Screen"] -- D Add Deposit --> B["Add Deposit Screen"]
-  A -- P Make Payment --> C["Make Payment Screen"]
-  A -- L Ledger --> D["Ledger View"]
+---
+config:
+  theme: neo-dark
+  look: handDrawn
+  layout: elk
+---
+flowchart TD
+  A["Main Menu"] -- D Add Deposit --> B["Add Deposit"]
+  A -- P Make Payment --> C["Make Payment"]
+  A -- L Ledger --> D["Ledger"]
   A -- X Exit --> E["Exit Application"]
-  D -- A All Transactions --> F["End"]
-  D -- D Deposits --> G["Show Deposits"]
-  D -- P Payments --> H["Show Payments"]
-  D -- R Reports --> I["Reports Screen"]
+  D -- A All --> F["Display all entries"]
+  D -- D Deposits --> G["Display only deposit entries"]
+  D -- P Payments --> H["Display only payment entries"]
+  D -- R Reports --> I["Reports"]
   D -- H Home --> A
-  I -- 1 Month To Date --> J["Month To Date Report"]
-  I -- 2 Previous Month --> K["Previous Month Report"]
-  I -- 3 Year To Date --> L["Year To Date Report"]
-  I -- 4 Previous Year --> M["Previous Year Report"]
+  I -- 1 Month To Date --> J["Month To Date"]
+  I -- 2 Previous Month --> K["Previous Month"]
+  I -- 3 Year To Date --> L["Year To Date"]
+  I -- 4 Previous Year --> M["Previous Year"]
   I -- 5 Search by Vendor --> N["Search by Vendor"]
   I -- 6 Custom Search --> O["Custom Search"]
   I -- 0 Back --> D
-  B -- Press Enter to Continue --> A
-  C -- Press Enter to Continue --> A
-  F -- Press Enter to Continue --> D
-  G -- Press Enter to Continue --> D
-  H -- Press Enter to Continue --> D
-  J -- Press Enter to Continue --> I
-  K -- Press Enter to Continue --> I
-  L -- Press Enter to Continue --> I
-  M -- Press Enter to Continue --> I
-  N -- Press Enter to Continue --> I
-  O -- Press Enter to Continue --> I
-  E -- Application Exits --> F
+  I -- H Home --> A
   A:::homeScreen
   B:::actionScreen
   C:::actionScreen
-  D:::ledgerScreen
+  D:::actionScreen
+  E:::homeScreen
   E:::exitScreen
   F:::actionScreen
   G:::actionScreen
   H:::actionScreen
-  I:::reportScreen
+  I:::actionScreen
   J:::actionScreen
   K:::actionScreen
   L:::actionScreen
   M:::actionScreen
   N:::actionScreen
   O:::actionScreen
-  classDef homeScreen fill:#000,stroke:#333,stroke-width:2px
-  classDef ledgerScreen fill:#000,stroke:#333,stroke-width:2px
-  classDef reportScreen fill:#000,stroke:#333,stroke-width:2px
-  classDef actionScreen fill:#325863,stroke:#333,stroke-width:2px
-  classDef exitScreen fill:#FF0000,stroke:#333,stroke-width:2px
-
+  classDef homeScreen fill:#6AA84F,stroke:#333,stroke-width:1px,color:#fff
+  classDef actionScreen fill:#3C78D8,stroke:#333,stroke-width:1px,color:#fff
+  classDef exitScreen fill:#E06666,stroke:#333,stroke-width:1px,color:#fff
 ```
 
 ## 📊 Project Status
